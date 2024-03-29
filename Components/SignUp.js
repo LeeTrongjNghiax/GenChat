@@ -2,7 +2,7 @@ import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-nativ
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import React, { useState } from 'react';
 
-import GlobalStyle from '../GlobalStyle.js'
+import GlobalStyle from '../GlobalStyle.js';
 import GlobalAsset from '../GlobalAsset.js';
 
 export default function SignUp({ navigation }) {
@@ -10,9 +10,9 @@ export default function SignUp({ navigation }) {
   const [phoneNumber, onChangePhoneNumber] = useState('');
   const [password, onChangePassword] = useState('');
   const [repeatedPassword, onChangeRepeatedPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); 
-  const [showRepeatedPassword, setShowRepeatedPassword] = useState(false); 
-  const [errors, setErrors] = useState({}); 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatedPassword, setShowRepeatedPassword] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const styles = GlobalStyle();
   const assets = GlobalAsset();

@@ -2,8 +2,8 @@ import { GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "fireb
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
 import React from 'react';
 
-import GoogleIcon from '../assets/google.js'
-import GlobalStyle from '../GlobalStyle.js'
+import GoogleIcon from '../assets/google.js';
+import GlobalStyle from '../GlobalStyle.js';
 import GlobalAsset from '../GlobalAsset.js';
 
 import auth from '../firebase/config.js'
