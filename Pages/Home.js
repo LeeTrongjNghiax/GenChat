@@ -6,10 +6,10 @@ import React from 'react';
 import GlobalStyle from '../GlobalStyle.js';
 import GlobalAsset from '../GlobalAsset.js';
 
-import PhoneInput from './Components/PhoneInput.js';
-import SignIn from './Components/SignIn.js';
-import SignUp from './Components/SignUp.js';
-import OTP from './Components/OTP.js';
+import PhoneInput from '../Components/PhoneInput.js';
+import SignIn from '../Components/SignIn.js';
+import SignUp from '../Components/SignUp.js';
+import OTP from '../Components/OTP.js';
 
 export default function Home() {
   const styles = GlobalStyle();
