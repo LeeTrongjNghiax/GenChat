@@ -1,6 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Image, useWindowDimensions  } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 
 import GlobalStyle from '../GlobalStyle.js';
@@ -24,7 +23,7 @@ export default function Home() {
     coverImageView = <></>
   }
 
-  const Stack = createNativeStackNavigator();
+  const Tab = createNativeStackNavigator();
 
   return (
     <View style={{
@@ -32,16 +31,14 @@ export default function Home() {
       flexDirection: "row", 
       backgroundColor: '#ecf0f1',
     }}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Sign In" component={SignIn} />
-          <Stack.Screen name="Sign Up" component={SignUp} />
-          <Stack.Screen name="Phone Input" component={PhoneInput} />
-          <Stack.Screen name="OTP" component={OTP} />
-        </Stack.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="Sign In" component={SignIn} />
+        <Tab.Screen name="Sign Up" component={SignUp} />
+        <Tab.Screen name="Phone Input" component={PhoneInput} />
+        <Tab.Screen name="OTP" component={OTP} />
+      </Tab.Navigator>
 
-        {coverImageView}
-      </NavigationContainer>
+      {coverImageView}
     </View>
   )
 }

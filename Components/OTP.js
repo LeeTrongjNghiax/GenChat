@@ -8,7 +8,6 @@ import GlobalAsset from '../GlobalAsset.js';
 export default function OTP({ navigation }) {
   const route = useRoute()
   const user = route.params?.user;
-  // console.log(user);
 
   const styles = GlobalStyle();
   const assets = GlobalAsset();
@@ -33,7 +32,7 @@ export default function OTP({ navigation }) {
           />
         </View>
 
-        <Pressable style={styles.btnSubmitWrapper}>
+        <Pressable style={styles.btnSubmitWrapper} onPress={() => navigation.navigate('Main', {user})}>
           <Text style={styles.btnSubmit}>Submit</Text>
         </Pressable>
       </View>
