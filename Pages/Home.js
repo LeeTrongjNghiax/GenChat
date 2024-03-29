@@ -1,14 +1,15 @@
-import React from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, Image, useWindowDimensions  } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+
 import GlobalStyle from '../GlobalStyle.js';
 import GlobalAsset from '../GlobalAsset.js';
 
-import SignIn from './SignIn.js';
-import SignUp from './SignUp.js';
-import OTP from './OTP.js';
-import PhoneInput from './PhoneInput.js';
+import PhoneInput from './Components/PhoneInput.js';
+import SignIn from './Components/SignIn.js';
+import SignUp from './Components/SignUp.js';
+import OTP from './Components/OTP.js';
 
 export default function Home() {
   const styles = GlobalStyle();

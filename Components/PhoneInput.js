@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
 import { useRoute } from "@react-navigation/native"
+import React, { useState } from 'react';
+
 import GlobalStyle from '../GlobalStyle.js'
 import GlobalAsset from '../GlobalAsset.js';
 
