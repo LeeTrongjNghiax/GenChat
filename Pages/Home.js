@@ -16,12 +16,12 @@ export default function Home() {
   const assets = GlobalAsset();
   const layout = useWindowDimensions();
 
-  let rightView = <View style={styles.coverImageWrapper} >
+  let coverImageView = <View style={styles.coverImageWrapper} >
     <Image style={styles.coverImage} source={{uri:assets.coverImage}}></Image>
   </View>;
 
   if (layout.width < layout.height * 3 / 2) {
-    rightView = <></>
+    coverImageView = <></>
   }
 
   const Stack = createNativeStackNavigator();
@@ -40,7 +40,7 @@ export default function Home() {
           <Stack.Screen name="OTP" component={OTP} />
         </Stack.Navigator>
 
-        {rightView}
+        {coverImageView}
       </NavigationContainer>
     </View>
   )
