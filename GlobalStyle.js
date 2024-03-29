@@ -18,6 +18,9 @@ export default function GlobalStyle() {
             justifyContent: 'center',
             gap: gap,
         },
+        flex1: {
+            flex: 1
+        }, 
         coverImageWrapper: {
             flex: 1
         }, 
@@ -130,6 +133,10 @@ export default function GlobalStyle() {
             marginLeft: margin,
             marginRight: margin, 
             color: 'red'
+        }, 
+
+        bolder: {
+            fontWeight: 'bolder'
         }
     });
 }

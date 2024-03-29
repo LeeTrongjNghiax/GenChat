@@ -1,21 +1,32 @@
 import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
+import { useRoute } from "@react-navigation/native";
 import { useWindowDimensions } from 'react-native';
 
 import * as React from 'react';
 
 import Profile from '../Components/Profile';
 
-const renderScene = SceneMap({
-  tab_1: Profile,
-  tab_2: Profile,
-});
+export default function Main({ navigation }) {
+  const route = useRoute();
+  const user = route.params?.user;
+  console.log(navigation);
 
-export default function Main() {
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case 'tab_1':
+        return <Profile user={user} navigation={{navigation}} />;
+      case 'tab_2':
+        return <Profile user={user} navigation={navigation} />;
+      default:
+        return null;
+    }
+  };
+
   const layout = useWindowDimensions();
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'tab_1', title: 'Message' },
+    // { key: 'tab_1', title: 'Message' },
     { key: 'tab_2', title: 'Profile' },
   ]);
 

@@ -81,10 +81,6 @@ export default function SignIn({ navigation }) {
             <Text style={styles.underline}>Sign Up</Text>
           </Pressable>
 
-          {/* <Pressable onPress={() => navigation.navigate('OTP')}>
-            <Text style={styles.underline}>OTP</Text>
-          </Pressable> */}
-
           <Pressable onPress={() => navigation.navigate('')}>
             <Text style={styles.underline}>Forgot Password</Text>
           </Pressable>
