@@ -49,54 +49,54 @@ export default function SignIn({ navigation }) {
   const assets = GlobalAsset();
   
   return (
-    <ScrollView style={{ marginTop: 20, marginBottom: 20 }}>
-      <View style={styles.container}>
-        <View style={styles.logoWrapper}>
+    <ScrollView contentContainerStyle={styles.flexGrow1}>
+      <View style={[styles.container]}>
+        <View style={[styles.marginSide]}>
           <Image source={{uri:assets.logo}} style={styles.logo}></Image>
         </View>
         
-        <Text style={styles.title}>Welcome to Gen Chat</Text>
+        <Text style={[styles.title, styles.marginSide, styles.fontColor]}>Welcome to Gen Chat</Text>
         
-        <View style={styles.inputComponent}>
-          <Text>Phone Number</Text>
+        <View style={[styles.inputComponent, styles.marginSide]}>
+          <Text style={[styles.fontColor]}>Phone Number</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, styles.fontColor]}
             placeholder="Phone number"
             inputMode='tel'
             maxLength={10}
           />
         </View>
 
-        <View style={styles.inputComponent}>
-          <Text>Password</Text>
+        <View style={[styles.inputComponent, styles.marginSide]}>
+          <Text style={[styles.fontColor]}>Password</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, styles.fontColor]}
             placeholder="Password"
             textContentType='password'
           />
         </View>
 
-        <View style={styles.hyperlinkComponent}>
+        <View style={[styles.hyperlinkComponent, styles.marginSide]}>
           <Pressable onPress={() => navigation.navigate('Sign Up')}>
-            <Text style={styles.underline}>Sign Up</Text>
+            <Text style={[styles.underline, styles.fontColor]}>Sign Up</Text>
           </Pressable>
 
           <Pressable onPress={() => navigation.navigate('')}>
-            <Text style={styles.underline}>Forgot Password</Text>
+            <Text style={[styles.underline, styles.fontColor]}>Forgot Password</Text>
           </Pressable>
         </View>
 
-        <Pressable style={styles.btnSubmitWrapper}>
+        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]}>
           <Text style={styles.btnSubmit}>Sign In</Text>
         </Pressable>
 
-        <View style={styles.continueWrapper}>
+        <View style={[styles.continueWrapper, styles.marginSide]}>
           <View style={styles.line}></View>
-          <Text>Or continue with</Text>
+          <Text style={[styles.fontColor]}>Or continue with</Text>
           <View style={styles.line}></View>
         </View>
 
-        <Pressable style={styles.btnGoogleWrapper} onPress={signIn}>
+        <Pressable style={[styles.btnGoogleWrapper, styles.marginSide]} onPress={signIn}>
           <GoogleIcon />
           <Text style={styles.btnGoogle}>Google</Text>
         </Pressable>

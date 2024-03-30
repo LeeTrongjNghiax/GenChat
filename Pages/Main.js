@@ -1,7 +1,6 @@
-import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
+import { TabView, TabBar } from 'react-native-tab-view';
 import { useRoute } from "@react-navigation/native";
 import { useWindowDimensions } from 'react-native';
-
 import * as React from 'react';
 
 import Profile from '../Components/Profile';
@@ -9,7 +8,6 @@ import Profile from '../Components/Profile';
 export default function Main({ navigation }) {
   const route = useRoute();
   const user = route.params?.user;
-  console.log(navigation);
 
   const renderScene = ({ route }) => {
     switch (route.key) {

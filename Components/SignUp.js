@@ -24,10 +24,10 @@ export default function SignUp({ navigation }) {
   const submit = () => {
     let errors = {};
 
-    console.log(name);
-    console.log(phoneNumber);
-    console.log(password);
-    console.log(repeatedPassword);
+    // console.log(name);
+    // console.log(phoneNumber);
+    // console.log(password);
+    // console.log(repeatedPassword);
 
     if (!password)
       errors.error = 'Password is required.';
@@ -53,28 +53,28 @@ export default function SignUp({ navigation }) {
   }
 
   return (
-    <ScrollView style={{marginTop: 20, marginBottom: 20}}>
+    <ScrollView contentContainerStyle={styles.flexGrow1}>
       <View style={styles.container}>
-        <View style={styles.logoWrapper}>
+        <View style={[styles.marginSide]}>
           <Image source={{uri:assets.logo}} style={styles.logo}></Image>
         </View>
         
-        <Text style={styles.title}>Sign Up to Gen Chat</Text>
+        <Text style={[styles.title, styles.marginSide, styles.fontColor]}>Sign Up to Gen Chat</Text>
 
-        <View style={styles.inputComponent}>
-          <Text>Name</Text>
+        <View style={[styles.inputComponent, styles.marginSide]}>
+          <Text style={styles.fontColor}>Name</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, styles.fontColor]}
             placeholder="Name"
             onChangeText={onChangeName}
             value={name}
           />
         </View>
         
-        <View style={styles.inputComponent}>
-          <Text>Phone Number</Text>
+        <View style={[styles.inputComponent, styles.marginSide]}>
+          <Text style={styles.fontColor}>Phone Number</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, styles.fontColor]}
             placeholder="Phone number"
             inputMode='tel'
             maxLength={10}
@@ -83,10 +83,10 @@ export default function SignUp({ navigation }) {
           />
         </View>
 
-        <View style={[styles.inputComponent]}>
-          <Text>Password</Text>
+        <View style={[styles.inputComponent, styles.marginSide]}>
+          <Text style={styles.fontColor}>Password</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, styles.fontColor]}
             placeholder="Password"
             secureTextEntry={!showPassword}
             onChangeText={onChangePassword}
@@ -100,10 +100,10 @@ export default function SignUp({ navigation }) {
           /> 
         </View>
 
-        <View style={styles.inputComponent}>
-          <Text>Repeat Password</Text>
+        <View style={[styles.inputComponent, styles.marginSide]}>
+          <Text style={styles.fontColor}>Repeat Password</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, styles.fontColor]}
             placeholder="Repeat Password"
             secureTextEntry={!showRepeatedPassword}
             onChangeText={onChangeRepeatedPassword}
@@ -117,9 +117,9 @@ export default function SignUp({ navigation }) {
           /> 
         </View>
 
-        <Text style={styles.error}> {errors.error} </Text> 
+        <Text style={[styles.error, styles.marginSide]}> {errors.error} </Text> 
 
-        <Pressable style={styles.btnSubmitWrapper} onPress={submit}>
+        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={submit}>
           <Text style={styles.btnSubmit}>Sign Up</Text>
         </Pressable>
       </View>

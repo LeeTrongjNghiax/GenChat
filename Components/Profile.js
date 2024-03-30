@@ -21,11 +21,11 @@ export default function Profile({ navigation }) {
   }
   
   return (
-    <ScrollView style={{ marginTop: 20, marginBottom: 20 }}>
+    <ScrollView contentContainerStyle={styles.flexGrow1}>
       <View style={styles.container}>
-        <Text style={styles.title}>Profile</Text>
+        <Text style={[styles.title, styles.marginSide, styles.fontColor]}>Profile</Text>
 
-        <View style={[styles.logoWrapper, {
+        <View style={[styles.marginSide, {
           flex: 1, 
           alignItems: 'center', 
           justifyContent: 'center'
@@ -42,8 +42,8 @@ export default function Profile({ navigation }) {
           marginRight: 40, 
           flexDirection: 'row', 
         }}>
-          <Text style={[styles.flex1]}>Name:</Text>
-          <Text style={[styles.flex1, styles.bolder]}>{user.displayName}</Text>
+          <Text style={[styles.flex1, styles.fontColor]}>Name:</Text>
+          <Text style={[styles.flex1, styles.bolder, styles.fontColor]}>{user.displayName}</Text>
         </View>
 
         <View style={{
@@ -51,11 +51,11 @@ export default function Profile({ navigation }) {
           marginRight: 40, 
           flexDirection: 'row', 
         }}>
-          <Text style={[styles.flex1]}>Phone Number</Text>
-          <Text style={[styles.flex1, styles.bolder]}>0938225745</Text>
+          <Text style={[styles.flex1, styles.fontColor]}>Phone Number</Text>
+          <Text style={[styles.flex1, styles.bolder, styles.fontColor]}>0938225745</Text>
         </View>
 
-        <Pressable style={styles.btnSubmitWrapper} onPress={appSignOut}>
+        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={appSignOut}>
           <Text style={styles.btnSubmit}>Sign Out</Text>
         </Pressable>
       </View>

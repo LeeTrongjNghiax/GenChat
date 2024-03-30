@@ -11,12 +11,40 @@ export default function GlobalStyle() {
         gap = 20;
     }
 
+    let backgroundColor = '#ffffff';
+    let borderColor = '#121212';
+    let fontColor = '#121212';
+
+    if (0 == 0) {
+        backgroundColor = '#121212';
+        borderColor = '#ffffff';
+        fontColor = '#ffffff';
+    }
+
     return StyleSheet.create({
         // General
+        marginSide: {
+            marginLeft: margin,
+            marginRight: margin,
+        }, 
+        bolder: {
+            fontWeight: 'bolder'
+        }, 
+        fontColor: {
+            color: fontColor
+        }, 
+        flexGrow1: {
+            flexGrow: 1
+        }, 
+
+        // All pages
         container: {
+            paddingTop: margin, 
+            paddingBottom: margin, 
             flex: 1,
             justifyContent: 'center',
             gap: gap,
+            backgroundColor: backgroundColor, 
         },
         flex1: {
             flex: 1
@@ -28,24 +56,15 @@ export default function GlobalStyle() {
             flex: 1,
             aspectRatio: 1 / 1
         }, 
-        logoWrapper: {
-            marginLeft: margin,
-            marginRight: margin,
-        },
         logo: {
             width: 40,
             aspectRatio: 1 / 1
         },
         title: {
-            marginLeft: margin,
-            marginRight: margin, 
             fontSize: 32,
-            color: '#121212',
             fontWeight: 'bold'
         },
         inputComponent: {
-            marginLeft: margin,
-            marginRight: margin, 
             gap: 10,
             alignSelf: 'stretch',
             justifyContent: 'center'
@@ -55,13 +74,11 @@ export default function GlobalStyle() {
         }, 
         input: {
             padding: 8,
-            borderColor: 'black',
+            borderColor: borderColor,
             borderWidth: 1,
             borderRadius: 10
         }, 
         btnSubmitWrapper: {
-            marginLeft: margin,
-            marginRight: margin, 
             alignSelf: 'stretch',
             alignItems: 'center',
             backgroundColor: 'blue',
@@ -76,8 +93,6 @@ export default function GlobalStyle() {
 
         // SignIn
         hyperlinkComponent: {
-            marginLeft: margin,
-            marginRight: margin, 
             alignSelf: 'stretch',
             flexDirection: 'row',
             justifyContent: 'space-between'
@@ -86,8 +101,6 @@ export default function GlobalStyle() {
             textDecorationLine: 'underline'
         },
         continueWrapper: {
-            marginLeft: margin,
-            marginRight: margin, 
             flexDirection: 'row',
             alignSelf: 'stretch',
             alignItems: 'center',
@@ -95,23 +108,21 @@ export default function GlobalStyle() {
         }, 
         line: {
             borderBottomWidth: 1,
-            borderBottomColor: '#000000',
+            borderBottomColor: borderColor,
             width: "25%",
         },
         btnGoogleWrapper: {
-            marginLeft: margin,
-            marginRight: margin, 
             flexDirection: 'row',
             alignSelf: 'stretch',
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: '#ffffff',
             borderRadius: 10,
-            borderColor: '#000000',
+            borderColor: borderColor,
             // borderWidth: 1
         },
         btnGoogle: {
-            color: '#000000',
+            color: '#121212',
             fontSize: 20,
             fontWeight: 'bold',
             padding: 10,
@@ -121,22 +132,11 @@ export default function GlobalStyle() {
         twoLogoWrapper: {
             flexDirection: 'row', 
             justifyContent: 'space-between',
-            marginLeft: margin,
-            marginRight: margin
-        }, 
-        description: {
-            marginLeft: margin,
-            marginRight: margin
         }, 
 
+        // Sign Up
         error: {
-            marginLeft: margin,
-            marginRight: margin, 
             color: 'red'
         }, 
-
-        bolder: {
-            fontWeight: 'bolder'
-        }
     });
 }

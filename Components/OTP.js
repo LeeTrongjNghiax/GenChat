@@ -13,26 +13,26 @@ export default function OTP({ navigation }) {
   const assets = GlobalAsset();
 
   return (
-    <ScrollView style={{marginTop: 20, marginBottom: 20}}>
+    <ScrollView contentContainerStyle={styles.flexGrow1}>
       <View style={styles.container}>
-        <View style={styles.logoWrapper}>
+        <View style={[styles.marginSide]}>
           <Image source={{uri:assets.logo}} style={styles.logo}></Image>
         </View>
         
-        <Text style={styles.title}>Welcome, {user.displayName}</Text>
+        <Text style={[styles.title, styles.marginSide, styles.fontColor]}>Welcome, {user.displayName}</Text>
 
-        <Text style={styles.description}>Enter the code from the sms we send to {user.phoneNumber}</Text>
+        <Text style={[styles.marginSide, styles.fontColor]}>Enter the code from the sms we send to {user.phoneNumber}</Text>
 
-        <View style={styles.inputComponent}>
+        <View style={[styles.inputComponent, styles.marginSide]}>
           <TextInput
-            style={styles.input}
+            style={[styles.input, styles.fontColor]}
             inputMode='numeric'
             placeholder="OTP"
             maxLength={6}
           />
         </View>
 
-        <Pressable style={styles.btnSubmitWrapper} onPress={() => navigation.navigate('Main', {user})}>
+        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={() => navigation.navigate('Main', {user})}>
           <Text style={styles.btnSubmit}>Submit</Text>
         </Pressable>
       </View>
