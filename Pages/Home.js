@@ -12,11 +12,10 @@ import OTP from '../Components/OTP.js';
 
 export default function Home() {
   const styles = GlobalStyle();
-  const assets = GlobalAsset();
   const layout = useWindowDimensions();
 
   let coverImageView = <View style={styles.coverImageWrapper} >
-    <Image style={styles.coverImage} source={{uri:assets.coverImage}}></Image>
+    <Image style={styles.coverImage} source={GlobalAsset.coverImage}></Image>
   </View>;
 
   if (layout.width < layout.height * 3 / 2) {

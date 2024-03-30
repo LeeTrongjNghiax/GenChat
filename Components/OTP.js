@@ -10,13 +10,12 @@ export default function OTP({ navigation }) {
   const user = route.params?.user;
 
   const styles = GlobalStyle();
-  const assets = GlobalAsset();
 
   return (
     <ScrollView contentContainerStyle={styles.flexGrow1}>
       <View style={styles.container}>
         <View style={[styles.marginSide]}>
-          <Image source={{uri:assets.logo}} style={styles.logo}></Image>
+          <Image source={GlobalAsset.logo} style={styles.logo}></Image>
         </View>
         
         <Text style={[styles.title, styles.marginSide, styles.fontColor]}>Welcome, {user.displayName}</Text>

@@ -10,13 +10,12 @@ export default function PhoneInput({ navigation }) {
   const user = route.params?.user;
 
   const styles = GlobalStyle();
-  const assets = GlobalAsset();
 
   return (
     <ScrollView contentContainerStyle={styles.flexGrow1}>
       <View style={styles.container}>
         <View style={[styles.twoLogoWrapper, styles.marginSide]}>
-          <Image source={{uri:assets.logo}} style={styles.logo}></Image>
+          <Image source={GlobalAsset.logo} style={styles.logo}></Image>
           <Image source={{uri:user.photoURL}} style={styles.logo}></Image>
         </View>
         

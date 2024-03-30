@@ -15,7 +15,6 @@ export default function SignUp({ navigation }) {
   const [errors, setErrors] = useState({});
 
   const styles = GlobalStyle();
-  const assets = GlobalAsset();
 
   const toggleShowPassword = () => setShowPassword(!showPassword); 
 
@@ -56,7 +55,7 @@ export default function SignUp({ navigation }) {
     <ScrollView contentContainerStyle={styles.flexGrow1}>
       <View style={styles.container}>
         <View style={[styles.marginSide]}>
-          <Image source={{uri:assets.logo}} style={styles.logo}></Image>
+          <Image source={GlobalAsset.logo} style={styles.logo}></Image>
         </View>
         
         <Text style={[styles.title, styles.marginSide, styles.fontColor]}>Sign Up to Gen Chat</Text>
