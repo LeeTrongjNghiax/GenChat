@@ -116,7 +116,7 @@ export default function GlobalStyle() {
             alignSelf: 'stretch',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: '#ffffff',
+            backgroundColor: '#eeeeee',
             borderRadius: 10,
             borderColor: borderColor,
             // borderWidth: 1
@@ -126,6 +126,10 @@ export default function GlobalStyle() {
             fontSize: 20,
             fontWeight: 'bold',
             padding: 10,
+        }, 
+        googleIcon: {
+            height: 30, 
+            width: 30, 
         }, 
 
         // OTP

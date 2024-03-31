@@ -104,7 +104,7 @@ export default function SignIn({ navigation }) {
         </View>
 
         <Pressable style={[styles.btnGoogleWrapper, styles.marginSide]} onPress={signIn}>
-          {/* <GoogleIcon /> */}
+          <Image source={GlobalAsset.googleIcon} style={styles.googleIcon}></Image>
           <Text style={styles.btnGoogle}>Google</Text>
         </Pressable>
       </View>
