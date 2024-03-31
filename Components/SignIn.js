@@ -10,13 +10,16 @@ import GlobalAsset from '../GlobalAsset.js';
 import auth from '../firebase/config.js'
 
 export default function SignIn({ navigation }) {
+  const [phoneNumber, onChangePhoneNumber] = useState('');
+  const [password, onChangePassword] = useState('');
+
   const provider = new GoogleAuthProvider();
   
   // Ham nay chay lien tuc de kiem tra xem nguoi dung co dang nhap ko
   auth.onAuthStateChanged(user => {
     // Neu nguoi dung da dang nhap thi chuyen huong sang trang khac
     if (user) {
-      navigation.navigate('Phone Input', {user: user});
+      navigation.navigate('Main', {user: user});
     }
   });
 
@@ -64,6 +67,8 @@ export default function SignIn({ navigation }) {
             placeholder="Phone number"
             inputMode='tel'
             maxLength={10}
+            onChangeText={onChangePhoneNumber}
+            value={phoneNumber}
           />
         </View>
 
@@ -73,6 +78,8 @@ export default function SignIn({ navigation }) {
             style={[styles.input, styles.fontColor]}
             placeholder="Password"
             textContentType='password'
+            onChangeText={onChangePassword}
+            value={password}
           />
         </View>
 

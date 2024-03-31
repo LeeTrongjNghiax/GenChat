@@ -1,9 +1,12 @@
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import React, { useState } from 'react';
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 import GlobalStyle from '../GlobalStyle.js';
 import GlobalAsset from '../GlobalAsset.js';
+
+import auth from '../firebase/config.js';
 
 export default function SignUp({ navigation }) {
   const [name, onChangeName] = useState('');
@@ -12,6 +15,7 @@ export default function SignUp({ navigation }) {
   const [repeatedPassword, onChangeRepeatedPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatedPassword, setShowRepeatedPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
   const styles = GlobalStyle();
@@ -19,6 +23,40 @@ export default function SignUp({ navigation }) {
   const toggleShowPassword = () => setShowPassword(!showPassword); 
 
   const toggleShowRepeatedPassword = () => setShowRepeatedPassword(!showRepeatedPassword); 
+
+  function onCaptchVerify() {
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: (response) => {
+            onSignup();
+          },
+          "expired-callback": () => {
+  
+          },
+        }
+      );
+    }
+  }
+
+  function onSignup() {
+    setLoading(true);
+
+    onCaptchVerify();
+
+    const appVerifier = window.recaptchaVerifier;
+
+    const formatPh = "+" + phoneNumber;
+    console.log(formatPh);
+
+    navigation.navigate('OTP', {
+      otp: { auth, formatPh, appVerifier }, 
+      user: { displayName: name, phoneNumber, password }
+    });
+  }
 
   const submit = () => {
     let errors = {};
@@ -54,6 +92,10 @@ export default function SignUp({ navigation }) {
   return (
     <ScrollView contentContainerStyle={styles.flexGrow1}>
       <View style={styles.container}>
+        <div id="recaptcha-container">
+
+        </div>
+
         <View style={[styles.marginSide]}>
           <Image source={GlobalAsset.logo} style={styles.logo}></Image>
         </View>
@@ -76,7 +118,7 @@ export default function SignUp({ navigation }) {
             style={[styles.input, styles.fontColor]}
             placeholder="Phone number"
             inputMode='tel'
-            maxLength={10}
+            maxLength={11}
             onChangeText={onChangePhoneNumber}
             value={phoneNumber}
           />
@@ -118,7 +160,10 @@ export default function SignUp({ navigation }) {
 
         <Text style={[styles.error, styles.marginSide]}> {errors.error} </Text> 
 
-        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={submit}>
+        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]}
+          // onPress={submit}
+          onPress={onSignup}
+        >
           <Text style={styles.btnSubmit}>Sign Up</Text>
         </Pressable>
       </View>

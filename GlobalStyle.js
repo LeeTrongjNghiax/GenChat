@@ -15,7 +15,7 @@ export default function GlobalStyle() {
     let borderColor = '#121212';
     let fontColor = '#121212';
 
-    if (0 == 0) {
+    if (0 == 1) {
         backgroundColor = '#121212';
         borderColor = '#ffffff';
         fontColor = '#ffffff';
