@@ -1,12 +1,12 @@
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { RecaptchaVerifier } from "firebase/auth";
 import React, { useState } from 'react';
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 import GlobalStyle from '../GlobalStyle.js';
 import GlobalAsset from '../GlobalAsset.js';
 
-import auth from '../firebase/config.js';
+import config from '../firebase/config.js';
 
 export default function SignUp({ navigation }) {
   const [name, onChangeName] = useState('');
@@ -18,6 +18,7 @@ export default function SignUp({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
+  const auth = config.auth;
   const styles = GlobalStyle();
 
   const toggleShowPassword = () => setShowPassword(!showPassword); 

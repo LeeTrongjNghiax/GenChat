@@ -1,15 +1,16 @@
-import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
+import { View, Text, Image, Pressable, ScrollView } from 'react-native';
 import { useRoute } from "@react-navigation/native";
 import { signOut } from "firebase/auth";
 import React from 'react'
 
 import GlobalStyle from '../GlobalStyle.js';
-import auth from '../firebase/config.js'
+import config from '../firebase/config.js'
 
 export default function Profile({ navigation }) {
   const route = useRoute();
   const user = route.params?.user;
 
+  const auth = config.auth;
   const styles = GlobalStyle();
     
   const appSignOut = () => {
