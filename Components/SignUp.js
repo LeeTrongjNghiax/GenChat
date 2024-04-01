@@ -1,4 +1,5 @@
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
+import { collection, addDoc } from "firebase/firestore"; 
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { RecaptchaVerifier } from "firebase/auth";
 import React, { useState } from 'react';
@@ -19,6 +20,7 @@ export default function SignUp({ navigation }) {
   const [errors, setErrors] = useState({});
 
   const auth = config.auth;
+  const db = config.db;
   const styles = GlobalStyle();
 
   const toggleShowPassword = () => setShowPassword(!showPassword); 
@@ -50,11 +52,33 @@ export default function SignUp({ navigation }) {
 
     const appVerifier = window.recaptchaVerifier;
     const formatPh = "+" + phoneNumber;
+    const user = { 
+      displayName: name, 
+      phoneNumber, 
+      password 
+    };
+
+    addUser(user);
 
     navigation.navigate('OTP', {
       otp: { auth, formatPh, appVerifier }, 
       user: { displayName: name, phoneNumber, password }
     });
+  }
+
+  const addUser = async (user) => {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        displayName: user.displayName, 
+        phoneNumber: user.phoneNumber, 
+        password: user.password
+        // photoURL: user.photoURL, 
+        // uid: user.uid, 
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   }
 
   const submit = () => {
@@ -153,7 +177,6 @@ export default function SignUp({ navigation }) {
         <Text style={[styles.error, styles.marginSide]}> {errors.error} </Text> 
 
         <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]}
-          // onPress={submit}
           onPress={submit}
         >
           <Text style={styles.btnSubmit}>Sign Up</Text>

@@ -1,46 +1,76 @@
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
-import { collection, addDoc } from "firebase/firestore"; 
-import React , { useState } from 'react';
+import { collection, getDocs } from "firebase/firestore"; 
+import React, { useState } from 'react';
 
 import GlobalStyle from '../GlobalStyle.js';
 import GlobalAsset from '../GlobalAsset.js';
 
-import config from '../firebase/config.js'
+import config from '../firebase/config.js';
 
 export default function SignIn({ navigation }) {
   const [phoneNumber, onChangePhoneNumber] = useState('');
   const [password, onChangePassword] = useState('');
+  const [errors, setErrors] = useState({});
 
-  const auth = config.auth;
   const db = config.db;
+  const auth = config.auth;
   const provider = new GoogleAuthProvider();
   
   // Ham nay chay lien tuc de kiem tra xem nguoi dung co dang nhap ko
-  auth.onAuthStateChanged(async user => {
-    // Neu nguoi dung da dang nhap thi chuyen huong sang trang khac
-    // console.log(user);
-    if (user) {
-      navigation.navigate('Main', { user: user });
-    }
-  });
+  // auth.onAuthStateChanged(async user => {
+
+  //   // Neu nguoi dung da dang nhap thi chuyen huong sang trang khac
+  //   // console.log(user);
+  //   if (user) {
+  //     navigation.navigate('Main', { user: user });
+  //   }
+  // });
+
+  // const signInGoogle = async () => {
+  //   const userCred = await signInWithPopup(auth, provider);
+  //   const user = userCred.user;
+  //   console.log(userCred);
+    
+  //   // Them nguoi dung
+
+  //   let isNewUser = true;
+
+  //   const querySnapshot = await getDocs(collection(db, "users"));
+  //   querySnapshot.forEach((doc) => {
+  //     if ( doc.data().uid == user.uid ) {
+  //       isNewUser == false;
+  //       return;
+  //     } 
+  //   });
+
+  //   if (isNewUser) addUser(user);
+  // }
 
   const signIn = async () => {
-    // console.log("Pressed Sign in");
-    const userCred = await signInWithPopup(auth, provider);
-    console.log(userCred);
-    
-    // Them nguoi dung
-    try {
-      const docRef = await addDoc(collection(db, "users"), {
-        first: "Ada",
-        last: "Lovelace",
-        born: 1815
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
+    const querySnapshot = await getDocs(collection(db, "users"));
+
+    querySnapshot.forEach(doc => {
+      const user = doc.data();
+      console.log(user.displayName);
+      console.log(user.phoneNumber);
+      console.log(user.password);
+      if ( 
+        user.phoneNumber == phoneNumber &&
+        user.password == password
+      ) {
+        const user = {
+          displayName: user.displayName, 
+          phoneNumber: user.phoneNumber, 
+          password: user.password
+        }
+        navigation.navigate('/Main', { user });
+      } 
+    });
+
+    let errors = {};
+    errors.error = 'Login information does not exists.';
+    setErrors(errors);
   }
 
   const styles = GlobalStyle();
@@ -60,7 +90,7 @@ export default function SignIn({ navigation }) {
             style={[styles.input, styles.fontColor]}
             placeholder="Phone number"
             inputMode='tel'
-            maxLength={10}
+            maxLength={11}
             onChangeText={onChangePhoneNumber}
             value={phoneNumber}
           />
@@ -82,25 +112,27 @@ export default function SignIn({ navigation }) {
             <Text style={[styles.underline, styles.fontColor]}>Sign Up</Text>
           </Pressable>
 
-          <Pressable onPress={() => navigation.navigate('')}>
+          <Pressable onPress={() => navigation.navigate('Sign Up')}>
             <Text style={[styles.underline, styles.fontColor]}>Forgot Password</Text>
           </Pressable>
         </View>
 
-        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]}>
+        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={signIn}>
           <Text style={styles.btnSubmit}>Sign In</Text>
         </Pressable>
 
-        <View style={[styles.continueWrapper, styles.marginSide]}>
+        <Text style={[styles.error, styles.marginSide]}>{errors.error}</Text> 
+
+        {/* <View style={[styles.continueWrapper, styles.marginSide]}>
           <View style={styles.line}></View>
           <Text style={[styles.fontColor]}>Or continue with</Text>
           <View style={styles.line}></View>
         </View>
 
-        <Pressable style={[styles.btnGoogleWrapper, styles.marginSide]} onPress={signIn}>
+        <Pressable style={[styles.btnGoogleWrapper, styles.marginSide]} onPress={signInGoogle}>
           <Image source={GlobalAsset.googleIcon} style={styles.googleIcon}></Image>
           <Text style={styles.btnGoogle}>Google</Text>
-        </Pressable>
+        </Pressable> */}
       </View>
     </ScrollView>
   )

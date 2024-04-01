@@ -26,7 +26,7 @@ export default function OTP({ navigation }) {
     signInWithPhoneNumber(auth, formatPh, appVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
-        console.log(window.confirmationResult);
+        console.log(confirmationResult);
         console.log("OTP sended successfully!");
       })
       .catch((error) => {
@@ -38,11 +38,9 @@ export default function OTP({ navigation }) {
 
   function onOTPVerify() {
     window.confirmationResult
-      .confirm(OTP => {
-        console.log(OTP);
-      })
+      .confirm(OTP)
       .then(async (res) => {
-        console.log(res);
+        addUser(user);
         navigation.navigate('Main', { user });
       })
       .catch((error) => {
@@ -50,6 +48,20 @@ export default function OTP({ navigation }) {
         setErrors(errors);
         console.log("Error verifying OTP: " + error);
       });
+  }
+
+  const addUser = async (user) => {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        displayName: user.displayName, 
+        phoneNumber: user.phoneNumber, 
+        photoURL: user.photoURL, 
+        uid: user.uid, 
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   }
 
   return (
