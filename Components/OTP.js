@@ -66,7 +66,7 @@ export default function OTP({ navigation }) {
         photoURL: user.photoURL ? user.photoURL : "default", 
         password: user.password
       });
-      console.log("Document written with ID: ", docRef.id);
+      // console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }

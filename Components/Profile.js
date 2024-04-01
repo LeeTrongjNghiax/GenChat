@@ -31,7 +31,13 @@ export default function Profile({ navigation }) {
           alignItems: 'center', 
           justifyContent: 'center'
         }]}>
-          <Image source={{ uri: user.photoURL }} style={{
+          <Image source={{
+            uri: (
+              user.photoURL == "default" ?
+              user.photoURL :
+              GlobalAsset.defaultLogoImage
+            )
+          }} style={{
             width: 100, 
             borderRadius: 50, 
             aspectRatio: 1 / 1

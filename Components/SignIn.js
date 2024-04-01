@@ -14,8 +14,6 @@ export default function SignIn({ navigation }) {
   const [errors, setErrors] = useState({});
 
   const db = config.db;
-  const auth = config.auth;
-  const provider = new GoogleAuthProvider();
   
   // Ham nay chay lien tuc de kiem tra xem nguoi dung co dang nhap ko
   // auth.onAuthStateChanged(async user => {
@@ -52,11 +50,6 @@ export default function SignIn({ navigation }) {
 
     querySnapshot.forEach(doc => {
       const user = doc.data();
-
-      // console.log(user.phoneNumber);
-      // console.log(phoneNumber);
-      // console.log(user.password);
-      // console.log(password);
       
       if ( 
         user.phoneNumber == phoneNumber &&

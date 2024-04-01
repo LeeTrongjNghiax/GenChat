@@ -1,5 +1,6 @@
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { collection, getDocs } from "firebase/firestore"; 
 import { RecaptchaVerifier } from "firebase/auth";
 import React, { useState } from 'react';
 
@@ -18,6 +19,7 @@ export default function SignUp({ navigation }) {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
+  const db = config.db;
   const auth = config.auth;
   const styles = GlobalStyle();
 
@@ -33,7 +35,7 @@ export default function SignUp({ navigation }) {
         {
           size: "invisible",
           callback: (response) => {
-            onSignup();
+            signUp();
           },
           "expired-callback": () => {
             
@@ -43,7 +45,7 @@ export default function SignUp({ navigation }) {
     }
   }
 
-  function onSignup() {
+  function signUp() {
     setLoading(true);
 
     onCaptchVerify();
@@ -57,7 +59,7 @@ export default function SignUp({ navigation }) {
     });
   }
 
-  const submit = () => {
+  const verifyInput = () => {
     let errors = {};
 
     if (!password)
@@ -78,7 +80,28 @@ export default function SignUp({ navigation }) {
     if (errors.error)
       setErrors(errors);
     else
-      onSignup();
+      signUp();
+  }
+
+  const checkPhoneNumber = async () => {
+    const querySnapshot = await getDocs(collection(db, "users"));
+    let isExistPhoneNumber = false;
+
+    querySnapshot.forEach(doc => {
+      const docPhoneNumber = doc.data().phoneNumber;
+      
+      if (isExistPhoneNumber == false) {
+        if ( docPhoneNumber == phoneNumber ) {
+          isExistPhoneNumber = true;
+          let errors = {};
+          errors.error = 'Phone number already exists';
+          setErrors(errors);
+        }
+      } 
+    });
+
+    if (isExistPhoneNumber == false)
+      verifyInput();
   }
 
   return (
@@ -153,7 +176,7 @@ export default function SignUp({ navigation }) {
         <Text style={[styles.error, styles.marginSide]}> {errors.error} </Text> 
 
         <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]}
-          onPress={submit}
+          onPress={checkPhoneNumber}
         >
           <Text style={styles.btnSubmit}>Sign Up</Text>
         </Pressable>

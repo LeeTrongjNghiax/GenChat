@@ -8,7 +8,6 @@ import Profile from '../../Components/Profile';
 export default function Main({ navigation }) {
   const route = useRoute();
   const user = route.params?.user;
-  console.log(user);
 
   const renderScene = ({ route }) => {
     switch (route.key) {
