@@ -3,9 +3,9 @@ import { useRoute } from "@react-navigation/native";
 import { useWindowDimensions } from 'react-native';
 import * as React from 'react';
 
-import Profile from '../Components/Profile';
+import Profile from '../../Components/Profile';
 
-export default function Main({ navigation }) {
+export default function Main({ navigation }, props) {
   const route = useRoute();
   const user = route.params?.user;
 
