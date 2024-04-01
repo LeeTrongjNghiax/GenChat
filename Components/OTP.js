@@ -63,8 +63,8 @@ export default function OTP({ navigation }) {
       const docRef = await addDoc(collection(db, "users"), {
         displayName: user.displayName, 
         phoneNumber: user.phoneNumber, 
-        // photoURL: user.photoURL, 
-        // uid: user.uid, 
+        photoURL: user.photoURL ? user.photoURL : "default", 
+        password: user.password
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {

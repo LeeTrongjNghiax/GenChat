@@ -52,19 +52,22 @@ export default function SignIn({ navigation }) {
 
     querySnapshot.forEach(doc => {
       const user = doc.data();
-      console.log(user.displayName);
-      console.log(user.phoneNumber);
-      console.log(user.password);
+
+      // console.log(user.phoneNumber);
+      // console.log(phoneNumber);
+      // console.log(user.password);
+      // console.log(password);
+      
       if ( 
         user.phoneNumber == phoneNumber &&
         user.password == password
       ) {
-        const user = {
+        const user2 = {
           displayName: user.displayName, 
           phoneNumber: user.phoneNumber, 
           password: user.password
         }
-        navigation.navigate('/Main', { user });
+        navigation.navigate('Main', { user: user2 });
       } 
     });
 
