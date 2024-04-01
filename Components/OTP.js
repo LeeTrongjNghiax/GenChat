@@ -8,6 +8,7 @@ import GlobalAsset from '../GlobalAsset.js';
 
 export default function OTP({ navigation }) {
   const [OTP, setOTP] = useState('');
+  const [errors, setErrors] = useState({});
 
   const route = useRoute()
   const user = route.params?.user;
@@ -20,29 +21,36 @@ export default function OTP({ navigation }) {
   const appVerifier = otps.appVerifier;
 
   const signIn = () => {
+    let errors = {};
+
     signInWithPhoneNumber(auth, formatPh, appVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
+        console.log(window.confirmationResult);
         console.log("OTP sended successfully!");
       })
       .catch((error) => {
-        console.log(error);
+        errors.error = "Error sending OTP: Exceed maximum sending request. Please try again later";
+        setErrors(errors);
+        console.log("Error sending OTP: " + error);
       });
   }
 
   function onOTPVerify() {
     window.confirmationResult
-      .confirm(OTP)
+      .confirm(OTP => {
+        console.log(OTP);
+      })
       .then(async (res) => {
         console.log(res);
         navigation.navigate('Main', { user });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        errors.error = "Error verifying OTP: OTP is not corrected";
+        setErrors(errors);
+        console.log("Error verifying OTP: " + error);
       });
   }
-
-  signIn();
 
   return (
     <ScrollView contentContainerStyle={styles.flexGrow1}>
@@ -53,26 +61,30 @@ export default function OTP({ navigation }) {
         
         <Text style={[styles.title, styles.marginSide, styles.fontColor]}>Welcome, {user.displayName}</Text>
 
-        <Text style={[styles.marginSide, styles.fontColor]}>Enter the code from the sms we send to {user.phoneNumber}</Text>
+        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={
+          () => {signIn();}
+        }>
+          <Text style={styles.btnSubmit}>Sending Code to {user.phoneNumber}</Text>
+        </Pressable>
 
         <View style={[styles.inputComponent, styles.marginSide]}>
           <TextInput
             style={[styles.input, styles.fontColor]}
             inputMode='numeric'
-            placeholder="OTP"
             maxLength={6}
             onChangeText={setOTP}
             value={OTP}
+            placeholder={"Enter the code from the sms we send to " + user.phoneNumber}
           />
         </View>
 
         <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={
-          () => {
-            onOTPVerify();
-          }
+          () => {onOTPVerify();}
         }>
-          <Text style={styles.btnSubmit}>Submit</Text>
+          <Text style={styles.btnSubmit}>Submit Code</Text>
         </Pressable>
+
+        <Text style={[styles.error, styles.marginSide]}>{errors.error}</Text>
       </View>
     </ScrollView>
   )

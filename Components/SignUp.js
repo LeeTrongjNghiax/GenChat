@@ -48,9 +48,7 @@ export default function SignUp({ navigation }) {
     onCaptchVerify();
 
     const appVerifier = window.recaptchaVerifier;
-
     const formatPh = "+" + phoneNumber;
-    console.log(formatPh);
 
     navigation.navigate('OTP', {
       otp: { auth, formatPh, appVerifier }, 
@@ -61,11 +59,6 @@ export default function SignUp({ navigation }) {
   const submit = () => {
     let errors = {};
 
-    // console.log(name);
-    // console.log(phoneNumber);
-    // console.log(password);
-    // console.log(repeatedPassword);
-
     if (!password)
       errors.error = 'Password is required.';
     else if (password.length < 8)
@@ -75,8 +68,8 @@ export default function SignUp({ navigation }) {
 
     if (!phoneNumber)
       errors.error = 'Phone Number is required.';
-    else if (!/0[0-9]{9}/.test(phoneNumber))
-      errors.error = 'Phone Number must have exactly 10 numbers and started with 0.';
+    else if (!/84[0-9]{9}/.test(phoneNumber))
+      errors.error = 'Phone Number must have exactly 11 numbers and started with 84.';
 
     if (!name)
       errors.error = 'Name is required.';
@@ -84,9 +77,7 @@ export default function SignUp({ navigation }) {
     if (errors.error)
       setErrors(errors);
     else
-      navigation.navigate('OTP', {user: {
-        displayName: name, phoneNumber, password
-      }});
+      onSignup();
   }
 
   return (
@@ -162,7 +153,7 @@ export default function SignUp({ navigation }) {
 
         <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]}
           // onPress={submit}
-          onPress={onSignup}
+          onPress={submit}
         >
           <Text style={styles.btnSubmit}>Sign Up</Text>
         </Pressable>

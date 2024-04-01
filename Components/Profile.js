@@ -16,7 +16,7 @@ export default function Profile({ navigation }) {
     signOut(auth).then(() => {
       navigation.navigate('Sign In', {user: null});
     }).catch((error) => {
-      console.log(error);
+      console.log("Error signing out: " + error);
     });
   }
   

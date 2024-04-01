@@ -18,37 +18,17 @@ export default function SignIn({ navigation }) {
   // Ham nay chay lien tuc de kiem tra xem nguoi dung co dang nhap ko
   auth.onAuthStateChanged(user => {
     // Neu nguoi dung da dang nhap thi chuyen huong sang trang khac
-    console.log(user);
+    // console.log(user);
     if (user) {
       navigation.navigate('Main', {user: user});
     }
   });
 
   const signIn = async () => {
-    console.log("Pressed Sign in");
-    // signInWithRedirect(auth, provider);
+    // console.log("Pressed Sign in");
     const userCred = await signInWithPopup(auth, provider);
 
-    // getRedirectResult(auth).then((result) => {
-    //   // This gives you a Google Access Token. You can use it to access Google APIs.
-    //   const credential = GoogleAuthProvider.credentialFromResult(result);
-    //   const token = credential.accessToken;
 
-    //   // The signed-in user info.
-    //   const user = result.user;
-    //   console.log(result);
-    //   // IdP data available using getAdditionalUserInfo(result)
-    //   // ...
-    // }).catch((error) => {
-    //   // Handle Errors here.
-    //   const errorCode = error.code;
-    //   const errorMessage = error.message;
-    //   // The email of the user's account used.
-    //   const email = error.customData.email;
-    //   // The AuthCredential type that was used.
-    //   const credential = GoogleAuthProvider.credentialFromError(error);
-    //   // ...
-    // });
   }
 
   const styles = GlobalStyle();

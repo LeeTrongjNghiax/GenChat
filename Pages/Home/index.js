@@ -30,7 +30,9 @@ export default function Home(props) {
       flexDirection: "row", 
       backgroundColor: 'black',
     }}>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Navigator
+        // screenOptions={{ headerShown: false }}
+      >
         <Tab.Screen name="Sign In" component={SignIn} />
         <Tab.Screen name="Sign Up" component={SignUp} />
         <Tab.Screen name="Phone Input" component={PhoneInput} />
