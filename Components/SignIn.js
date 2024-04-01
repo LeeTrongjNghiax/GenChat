@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "firebase/auth";
+import { GoogleAuthProvider, signInWithRedirect, signInWithPopup, getRedirectResult } from "firebase/auth";
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
 import React , { useState } from 'react';
 
@@ -24,9 +24,10 @@ export default function SignIn({ navigation }) {
     }
   });
 
-  const signIn = () => {
+  const signIn = async () => {
     console.log("Pressed Sign in");
-    signInWithRedirect(auth, provider);
+    // signInWithRedirect(auth, provider);
+    const userCred = await signInWithPopup(auth, provider);
 
     // getRedirectResult(auth).then((result) => {
     //   // This gives you a Google Access Token. You can use it to access Google APIs.
