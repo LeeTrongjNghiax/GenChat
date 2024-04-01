@@ -142,5 +142,8 @@ export default function GlobalStyle() {
         error: {
             color: 'red'
         }, 
+        success: {
+            color: 'green'
+        }
     });
 }

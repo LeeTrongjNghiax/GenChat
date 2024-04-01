@@ -1,14 +1,18 @@
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
 import { signInWithPhoneNumber } from "firebase/auth";
+import { collection, addDoc } from 'firebase/firestore'
 import { useRoute } from "@react-navigation/native";
 import React, { useState } from 'react';
 
 import GlobalStyle from '../GlobalStyle.js';
 import GlobalAsset from '../GlobalAsset.js';
 
+import config from '../firebase/config.js';
+
 export default function OTP({ navigation }) {
   const [OTP, setOTP] = useState('');
   const [errors, setErrors] = useState({});
+  const [alerts, setAlerts] = useState({});
 
   const route = useRoute()
   const user = route.params?.user;
@@ -20,19 +24,23 @@ export default function OTP({ navigation }) {
   const formatPh = otps.formatPh;
   const appVerifier = otps.appVerifier;
 
+  const db = config.db;
+
   const signIn = () => {
     let errors = {};
+    let alerts = {};
 
     signInWithPhoneNumber(auth, formatPh, appVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
-        console.log(confirmationResult);
-        console.log("OTP sended successfully!");
+        alerts.alert = "OTP sended successfully!";
+        setAlerts(alerts);
+        // console.log("OTP sended successfully!");
       })
       .catch((error) => {
-        errors.error = "Error sending OTP: Exceed maximum sending request. Please try again later";
+        errors.error = "Error sending OTP: " + error;
         setErrors(errors);
-        console.log("Error sending OTP: " + error);
+        console.error("Error sending OTP: " + error);
       });
   }
 
@@ -44,9 +52,9 @@ export default function OTP({ navigation }) {
         navigation.navigate('Main', { user });
       })
       .catch((error) => {
-        errors.error = "Error verifying OTP: OTP is not corrected";
+        errors.error = "Error verifying OTP: " + error;
         setErrors(errors);
-        console.log("Error verifying OTP: " + error);
+        console.error("Error verifying OTP: " + error);
       });
   }
 
@@ -55,8 +63,8 @@ export default function OTP({ navigation }) {
       const docRef = await addDoc(collection(db, "users"), {
         displayName: user.displayName, 
         phoneNumber: user.phoneNumber, 
-        photoURL: user.photoURL, 
-        uid: user.uid, 
+        // photoURL: user.photoURL, 
+        // uid: user.uid, 
       });
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
@@ -97,6 +105,7 @@ export default function OTP({ navigation }) {
         </Pressable>
 
         <Text style={[styles.error, styles.marginSide]}>{errors.error}</Text>
+        <Text style={[styles.success, styles.marginSide]}>{alerts.alert}</Text>
       </View>
     </ScrollView>
   )
