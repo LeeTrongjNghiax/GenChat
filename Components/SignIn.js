@@ -18,6 +18,7 @@ export default function SignIn({ navigation }) {
   // Ham nay chay lien tuc de kiem tra xem nguoi dung co dang nhap ko
   auth.onAuthStateChanged(user => {
     // Neu nguoi dung da dang nhap thi chuyen huong sang trang khac
+    console.log(user)
     if (user) {
       navigation.navigate('Main', {user: user});
     }
