@@ -61,10 +61,10 @@ export default function OTP({ navigation }) {
         
         <Text style={[styles.title, styles.marginSide, styles.fontColor]}>Welcome, {user.displayName}</Text>
 
-        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={
+        <Pressable style={[styles.marginSide]} onPress={
           () => {signIn();}
         }>
-          <Text style={styles.btnSubmit}>Sending Code to {user.phoneNumber}</Text>
+          <Text style={[styles.underline, styles.fontColor]}>Sending Code to {user.phoneNumber}</Text>
         </Pressable>
 
         <View style={[styles.inputComponent, styles.marginSide]}>
