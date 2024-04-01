@@ -15,7 +15,7 @@ export default function SignIn({ navigation }) {
 
   const provider = new GoogleAuthProvider();
   
-  // Ham nay chay lien tuc de kiem tra xem nguoi dung co dang nhap ko
+  // Ham nay chay lien tuc de kiem tra xem nguoi dung co dang nhap ko 2222
   auth.onAuthStateChanged(user => {
     // Neu nguoi dung da dang nhap thi chuyen huong sang trang khac
     if (user) {
