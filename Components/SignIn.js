@@ -9,16 +9,17 @@ import GlobalAsset from '../GlobalAsset.js';
 
 import auth from '../firebase/config.js'
 
+
 export default function SignIn({ navigation }) {
+  // console.log(auth);
   const [phoneNumber, onChangePhoneNumber] = useState('');
   const [password, onChangePassword] = useState('');
 
   const provider = new GoogleAuthProvider();
   
-  // Ham nay chay lien tuc de kiem tra xem nguoi dung co dang nhap ko
+  // Ham nay chay lien tuc de kiem tra xem nguoi dung co dang nhap ko 2222
   auth.onAuthStateChanged(user => {
     // Neu nguoi dung da dang nhap thi chuyen huong sang trang khac
-    console.log(user)
     if (user) {
       navigation.navigate('Main', {user: user});
     }
