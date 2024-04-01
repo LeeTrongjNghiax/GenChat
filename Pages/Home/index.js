@@ -31,7 +31,7 @@ export default function Home(props) {
       backgroundColor: 'black',
     }}>
       <Tab.Navigator
-        // screenOptions={{ headerShown: false }}
+        // screenOptions={{ headerShown: false }} rknrelbnrelbnln hẻhkrk
       >
         <Tab.Screen name="Sign In" component={SignIn} />
         <Tab.Screen name="Sign Up" component={SignUp} />
