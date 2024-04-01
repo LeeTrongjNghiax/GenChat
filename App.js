@@ -15,6 +15,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {
           routes.map(({ component: Component, path, name: name, ...rest }) => {
+            
             return <Stack.Screen key={path} name={name} component={Component} {...rest} />
           })
         }
