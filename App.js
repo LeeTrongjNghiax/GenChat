@@ -11,19 +11,14 @@ export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
-    <Routes>
-      {
-        routes.map(({ component: Component, path, ...rest }) => {
-          return <Route component={Component} key={path} {...rest} />
-        })
-      }
-    </Routes>
-
-    // <NavigationContainer>
-    //   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    //     <Stack.Screen name="Home" component={Home} />
-    //     <Stack.Screen name="Main" component={Main} />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {
+          routes.map(({ component: Component, path, name: name, ...rest }) => {
+            return <Stack.Screen key={path} name={name} component={Component} {...rest} />
+          })
+        }
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
