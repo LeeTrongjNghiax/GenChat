@@ -1,9 +1,7 @@
 import { GoogleAuthProvider, signInWithRedirect, getRedirectResult } from "firebase/auth";
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
 import React , { useState } from 'react';
-import { logo } from '../assets/logo.png';
 
-// import GoogleIcon from '../assets/google.js';
 import GlobalStyle from '../GlobalStyle.js';
 import GlobalAsset from '../GlobalAsset.js';
 
@@ -17,9 +15,10 @@ export default function SignIn({ navigation }) {
 
   const provider = new GoogleAuthProvider();
   
-  // Ham nay chay lien tuc de kiem tra xem nguoi dung co dang nhap ko 2222
+  // Ham nay chay lien tuc de kiem tra xem nguoi dung co dang nhap ko
   auth.onAuthStateChanged(user => {
     // Neu nguoi dung da dang nhap thi chuyen huong sang trang khac
+    console.log(user);
     if (user) {
       navigation.navigate('Main', {user: user});
     }

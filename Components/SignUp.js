@@ -35,7 +35,7 @@ export default function SignUp({ navigation }) {
             onSignup();
           },
           "expired-callback": () => {
-  
+            
           },
         }
       );

@@ -4,8 +4,8 @@ import { Button, TextInput, View } from 'react-native';
 import auth from '@react-native-firebase/auth';
 
 export default function PhoneSignIn() {
-    //   If null, no SMS has been sent
-    console.log(auth);
+  //   If null, no SMS has been sent
+  console.log(auth);
   const [confirm, setConfirm] = useState(null);
 
   // verification code (OTP - One-Time-Passcode)
@@ -26,7 +26,8 @@ export default function PhoneSignIn() {
 //     return subscriber; // unsubscribe on unmount
 //   }, []);
 
-//   // Handle the button press
+  
+  // Handle the button press
   async function signInWithPhoneNumber() {
     try {
         const confirmation = await auth().signInWithPhoneNumber('0374858237');
@@ -44,18 +45,9 @@ export default function PhoneSignIn() {
     }
   }
 
-    signInWithPhoneNumber();
+  signInWithPhoneNumber();
 
-  if (!confirm) {
-    return (
-      <Button
-        title="Phone Number Sign In"
-        onPress={() => signInWithPhoneNumber('+1 650-555-3434')}
-      />
-    );
-  }
-
-    return (
+  return (
       
     <View>
       <TextInput value={code} onChangeText={text => setCode(text)} />
