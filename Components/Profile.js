@@ -18,22 +18,18 @@ export default function Profile({ navigation }) {
     signOut(auth).then(() => {
       navigation.navigate('Sign In', {user: null});
     }).catch((error) => {
-      console.log("Error signing out: " + error);
+      console.error("Error signing out: " + error);
     });
   }
 
   let image = GlobalAsset.defaultLogoImage
 
   if (user.photoURL == undefined) {
-    // console.log("1");
     image = GlobalAsset.defaultLogoImage
   }
   else {
-    // console.log("2");
     image = user.photoURL
   }
-  
-  console.log(image);
 
   return (
     <ScrollView contentContainerStyle={styles.flexGrow1}>

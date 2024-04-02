@@ -11,8 +11,8 @@ export default function Main({ navigation }) {
 
   const renderScene = ({ route }) => {
     switch (route.key) {
-      case 'tab_1': return <View></View>;
-      case 'tab_2': return <Profile user={user} navigation={navigation} />;
+      case 'tab_2': return <View></View>;
+      case 'tab_1': return <Profile user={user} navigation={navigation} />;
       default: return null;
     }
   };
@@ -21,8 +21,8 @@ export default function Main({ navigation }) {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'tab_1', title: 'Message' },
-    { key: 'tab_2', title: 'Profile' },
+    { key: 'tab_1', title: 'Profile' },
+    { key: 'tab_2', title: 'Message' },
   ]);
 
   return (

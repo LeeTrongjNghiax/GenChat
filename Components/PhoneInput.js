@@ -1,4 +1,5 @@
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
+import { collection, getDocs } from "firebase/firestore"; 
 import { useRoute } from "@react-navigation/native";
 import { RecaptchaVerifier } from "firebase/auth";
 import React, { useState } from 'react';
@@ -10,10 +11,12 @@ import config from '../firebase/config.js';
 
 export default function PhoneInput({ navigation }) {
   const [phoneNumber, onChangePhoneNumber] = useState('');
+  const [errors, setErrors] = useState({});
 
   const route = useRoute()
   const user = route.params?.user;
 
+  const db = config.db;
   const auth = config.auth;
   const styles = GlobalStyle();
 
@@ -35,7 +38,28 @@ export default function PhoneInput({ navigation }) {
     }
   }
 
-  function submit() {
+  const checkPhoneNumber = async () => {
+    const querySnapshot = await getDocs(collection(db, "users"));
+    let isExistPhoneNumber = false;
+
+    querySnapshot.forEach(doc => {
+      const docPhoneNumber = doc.data().phoneNumber;
+      
+      if (isExistPhoneNumber == false) {
+        if ( docPhoneNumber == phoneNumber ) {
+          isExistPhoneNumber = true;
+          let errors = {};
+          errors.error = 'Phone number already exists';
+          setErrors(errors);
+        }
+      } 
+    });
+
+    if (isExistPhoneNumber == false)
+      goToOtp();
+  }
+
+  function goToOtp() {
     onCaptchVerify();
 
     const appVerifier = window.recaptchaVerifier;
@@ -78,9 +102,11 @@ export default function PhoneInput({ navigation }) {
           />
         </View>
 
-        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={submit}>
+        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={checkPhoneNumber}>
           <Text style={styles.btnSubmit}>Submit</Text>
         </Pressable>
+
+        <Text style={[styles.error, styles.marginSide]}>{errors.error}</Text>
       </View>
     </ScrollView>
   )

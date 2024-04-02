@@ -1,6 +1,6 @@
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
 import { signInWithPhoneNumber } from "firebase/auth";
-import { collection, addDoc } from 'firebase/firestore'
+import { setDoc, doc } from 'firebase/firestore'
 import { useRoute } from "@react-navigation/native";
 import React, { useState } from 'react';
 
@@ -16,7 +16,6 @@ export default function OTP({ navigation }) {
 
   const route = useRoute()
   const user = route.params?.user;
-  console.log(user);
 
   const styles = GlobalStyle();
 
@@ -50,6 +49,7 @@ export default function OTP({ navigation }) {
       .confirm(OTP)
       .then(async (res) => {
         addUser(user);
+        alert("Sign In successfully!")
         navigation.navigate('Main', { user });
       })
       .catch((error) => {
@@ -61,13 +61,12 @@ export default function OTP({ navigation }) {
 
   const addUser = async (user) => {
     try {
-      const docRef = await addDoc(collection(db, "users"), {
+      await setDoc(doc(db, "users", user.phoneNumber), {
         displayName: user.displayName, 
         phoneNumber: user.phoneNumber, 
         photoURL: user.photoURL == null ? "default" : user.photoURL, 
         password: user.password
       });
-      // console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }

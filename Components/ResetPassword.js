@@ -1,5 +1,5 @@
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
-import { collection, query, where, updateDoc, getDocs  } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { useRoute } from "@react-navigation/native";
 import React, { useState } from 'react';
@@ -18,7 +18,6 @@ export default function ResetPassword({ navigation }) {
   const [errors, setErrors] = useState({});
 
   const db = config.db;
-  const auth = config.auth;
   const styles = GlobalStyle();
 
   const route = useRoute()
@@ -29,29 +28,15 @@ export default function ResetPassword({ navigation }) {
   const toggleShowRepeatedPassword = () => setShowRepeatedPassword(!showRepeatedPassword);
 
   const updatePassword = async () => {
-    const users = collection(db, "users");
-
-    const q = query(users, where("phoneNumber", "==", phoneNumber));
-    
-    const querySnapshot = await getDocs(q);
-
-    await updateDoc(querySnapshot, {password: password});
-
-    // querySnapshot.forEach(doc => {
-    //   const user = doc.data();
-      
-    //   if ( 
-    //     user.phoneNumber == phoneNumber &&
-    //     user.password == password
-    //   ) {
-    //     const user2 = {
-    //       displayName: user.displayName, 
-    //       phoneNumber: user.phoneNumber, 
-    //       password: user.password
-    //     }
-    //     navigation.navigate('Main', { user: user2 });
-    //   }
-    // });
+    try {
+      const users = doc(db, 'users', phoneNumber);
+      console.log(users);
+      setDoc(users, { password: password }, { merge: true });
+      alert("Password Update successfully!");
+      navigation.navigate('Sign In');
+    } catch (error) {
+      console.error("Error updating password: " + error);
+    }
   }
 
   const verifyInput = () => {
@@ -67,7 +52,7 @@ export default function ResetPassword({ navigation }) {
     if (errors.error)
       setErrors(errors);
     else
-        updatePassword();
+      updatePassword();
   }
 
   return (
