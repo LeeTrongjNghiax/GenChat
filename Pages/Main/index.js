@@ -1,6 +1,6 @@
 import { TabView, TabBar } from 'react-native-tab-view';
 import { useRoute } from "@react-navigation/native";
-import { useWindowDimensions } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 import * as React from 'react';
 
 import Profile from '../../Components/Profile';
@@ -11,7 +11,7 @@ export default function Main({ navigation }) {
 
   const renderScene = ({ route }) => {
     switch (route.key) {
-      case 'tab_1': return <Profile user={user} navigation={{navigation}} />;
+      case 'tab_1': return <View></View>;
       case 'tab_2': return <Profile user={user} navigation={navigation} />;
       default: return null;
     }

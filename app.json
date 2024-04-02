@@ -25,7 +25,9 @@
       "package": "com.leetrongjnghiax.GenChat"
     },
     "web": {
-      "favicon": "./assets/logo.png"
+      "favicon": "./assets/logo.png", 
+      "output": "single",
+      "bundler": "metro"
     },
     "extra": {
       "eas": {

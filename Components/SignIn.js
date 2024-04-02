@@ -1,7 +1,7 @@
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { GoogleAuthProvider } from "firebase/auth";
-import { collection, getDocs } from "firebase/firestore"; 
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { collection, getDocs, addDoc } from "firebase/firestore"; 
 import React, { useState } from 'react';
 
 import GlobalStyle from '../GlobalStyle.js';
@@ -16,36 +16,58 @@ export default function SignIn({ navigation }) {
   const [errors, setErrors] = useState({});
 
   const db = config.db;
+  const auth = config.auth;
+  const provider = new GoogleAuthProvider();
   
   // Ham nay chay lien tuc de kiem tra xem nguoi dung co dang nhap ko
-  // auth.onAuthStateChanged(async user => {
+  auth.onAuthStateChanged(async user => {
 
-  //   // Neu nguoi dung da dang nhap thi chuyen huong sang trang khac
-  //   // console.log(user);
-  //   if (user) {
-  //     navigation.navigate('Main', { user: user });
-  //   }
-  // });
+    // Neu nguoi dung da dang nhap thi chuyen huong sang trang khac
+    // console.log(user);
+    if (user) {
+      navigation.navigate('Main', { user: user });
+    }
+  });
 
-  // const signInGoogle = async () => {
-  //   const userCred = await signInWithPopup(auth, provider);
-  //   const user = userCred.user;
-  //   console.log(userCred);
+  const signInGoogle = async () => {
+    const userCred = await signInWithPopup(auth, provider);
+    const user = userCred.user;
+    // console.log(userCred);
     
-  //   // Them nguoi dung
+    // Them nguoi dung
 
-  //   let isNewUser = true;
+    let isNewUser = true;
+    navigation.navigate('PhoneInput', { user: user });
 
-  //   const querySnapshot = await getDocs(collection(db, "users"));
-  //   querySnapshot.forEach((doc) => {
-  //     if ( doc.data().uid == user.uid ) {
-  //       isNewUser == false;
-  //       return;
-  //     } 
-  //   });
+    const querySnapshot = await getDocs(collection(db, "users"));
+    querySnapshot.forEach((doc) => {
+      if ( doc.data().uid == user.uid ) {
+        isNewUser == false;
+        return;
+      } 
+    });
 
-  //   if (isNewUser) addUser(user);
-  // }
+    if (isNewUser) addUser({
+      displayName: userCred.user.displayName, 
+      phoneNumber: userCred.user.phoneNumber, 
+      photoURL: userCred.user.photoURL, 
+      password: "", 
+    });
+  }
+
+  const addUser = async (user) => {
+    try {
+      const docRef = await addDoc(collection(db, "users"), {
+        displayName: user.displayName, 
+        phoneNumber: user.phoneNumber, 
+        photoURL: user.photoURL ? user.photoURL : "default", 
+        password: user.password
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
 
   const signIn = async () => {
     const querySnapshot = await getDocs(collection(db, "users"));
@@ -130,7 +152,7 @@ export default function SignIn({ navigation }) {
 
         <Text style={[styles.error, styles.marginSide]}>{errors.error}</Text> 
 
-        {/* <View style={[styles.continueWrapper, styles.marginSide]}>
+        <View style={[styles.continueWrapper, styles.marginSide]}>
           <View style={styles.line}></View>
           <Text style={[styles.fontColor]}>Or continue with</Text>
           <View style={styles.line}></View>
@@ -139,7 +161,7 @@ export default function SignIn({ navigation }) {
         <Pressable style={[styles.btnGoogleWrapper, styles.marginSide]} onPress={signInGoogle}>
           <Image source={GlobalAsset.googleIcon} style={styles.googleIcon}></Image>
           <Text style={styles.btnGoogle}>Google</Text>
-        </Pressable> */}
+        </Pressable>
       </View>
     </ScrollView>
   )

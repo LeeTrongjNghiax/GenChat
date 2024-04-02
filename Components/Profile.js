@@ -4,6 +4,7 @@ import { signOut } from "firebase/auth";
 import React from 'react'
 
 import GlobalStyle from '../GlobalStyle.js';
+import GlobalAsset from '../GlobalAsset.js';
 import config from '../firebase/config.js'
 
 export default function Profile({ navigation }) {
@@ -20,7 +21,20 @@ export default function Profile({ navigation }) {
       console.log("Error signing out: " + error);
     });
   }
+
+  let image = GlobalAsset.defaultLogoImage
+
+  if (user.photoURL == undefined) {
+    // console.log("1");
+    image = GlobalAsset.defaultLogoImage
+  }
+  else {
+    // console.log("2");
+    image = user.photoURL
+  }
   
+  console.log(image);
+
   return (
     <ScrollView contentContainerStyle={styles.flexGrow1}>
       <View style={styles.container}>
@@ -32,14 +46,10 @@ export default function Profile({ navigation }) {
           justifyContent: 'center'
         }]}>
           <Image source={{
-            uri: (
-              user.photoURL == "default" ?
-              user.photoURL :
-              GlobalAsset.defaultLogoImage
-            )
+            uri: image
           }} style={{
-            width: 100, 
-            borderRadius: 50, 
+            width: 200, 
+            borderRadius: 100, 
             aspectRatio: 1 / 1
           }}></Image>
         </View>
