@@ -1,7 +1,7 @@
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { collection, getDocs, addDoc, query, where, updateDoc, doc } from "firebase/firestore"; 
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { collection, getDocs, addDoc } from "firebase/firestore"; 
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import React, { useState } from 'react';
 
 import GlobalStyle from '../GlobalStyle.js';
@@ -84,6 +84,34 @@ export default function SignIn({ navigation }) {
   const toggleShowPassword = () => setShowPassword(!showPassword); 
 
   const styles = GlobalStyle();
+
+
+
+  const updatePassword = async () => {
+    const users = collection(db, "users");
+
+    // const q = query(users, where("phoneNumber", "==", "84932659945"));
+    const q = await getDocs(collection(db, "users"));
+    
+    console.log("1");
+    // const querySnapshot = await getDocs(q);
+    console.log("2");
+
+    // collection(db, "users").doc(password).update({password: "lmao"});
+    q.forEach(doc2 => {
+      console.log(doc2);
+      updateDoc(doc(db, "users", 
+        // "displayName", "Nghia Dan", 
+        "password", password
+      ), {"password": "lmao"})
+    })
+    console.log("3");
+    
+  }
+
+  // updatePassword();
+
+
   
   return (
     <ScrollView contentContainerStyle={styles.flexGrow1}>
