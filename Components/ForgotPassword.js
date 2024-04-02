@@ -38,6 +38,18 @@ export default function ForgotPassword({ navigation }) {
     }
   }
 
+  const verifyInput = () => {
+    let errors = {};
+
+    if (!phoneNumber)
+      errors.error = 'Phone Number is required.';
+
+    if (errors.error)
+      setErrors(errors);
+    else
+      submit();
+  }
+
   const submit = async () => {
     onCaptchVerify();
 
@@ -47,8 +59,7 @@ export default function ForgotPassword({ navigation }) {
     const querySnapshot = await getDocs(collection(db, "users"));
     querySnapshot.forEach((doc) => {
       const user = doc.data();
-      if ( doc.data().phoneNumber == user.phoneNumber ) {
-
+      if ( doc.data().phoneNumber == phoneNumber ) {
         navigation.navigate('OTP Reset Password', {
             otp: { auth, formatPh, appVerifier }, 
             user: { 
@@ -90,7 +101,7 @@ export default function ForgotPassword({ navigation }) {
           />
         </View>
 
-        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={submit}>
+        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={verifyInput}>
           <Text style={styles.btnSubmit}>Submit</Text>
         </Pressable>
 

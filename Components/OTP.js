@@ -44,6 +44,18 @@ export default function OTP({ navigation }) {
       });
   }
 
+  const verifyInput = () => {
+    let errors = {};
+
+    if (!OTP)
+      errors.error = 'OTP is required.';
+
+    if (errors.error)
+      setErrors(errors);
+    else
+      onOTPVerify();
+  }
+
   function onOTPVerify() {
     window.confirmationResult
       .confirm(OTP)
@@ -53,7 +65,8 @@ export default function OTP({ navigation }) {
         navigation.navigate('Main', { user });
       })
       .catch((error) => {
-        errors.error = "Error verifying OTP: " + error;
+        let errors = {};
+        errors.error = "OTP is invalid";
         setErrors(errors);
         console.error("Error verifying OTP: " + error);
       });
@@ -99,7 +112,7 @@ export default function OTP({ navigation }) {
         </View>
 
         <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={
-          () => {onOTPVerify();}
+          () => {verifyInput();}
         }>
           <Text style={styles.btnSubmit}>Submit Code</Text>
         </Pressable>
