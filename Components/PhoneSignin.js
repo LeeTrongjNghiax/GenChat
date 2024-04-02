@@ -12,11 +12,6 @@ export default function PhoneSignIn() {
 
   // Handle login
 
-//   useEffect(() => {
-//     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-//     return subscriber; // unsubscribe on unmount
-//   }, []);
-
   
   // Handle the button press
   async function signInWithPhoneNumber() {

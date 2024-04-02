@@ -41,22 +41,6 @@ export default function SignIn({ navigation }) {
         displayName: userCred.user.displayName, 
         photoURL: userCred.user.photoURL, 
       } });
-
-    // let isNewUser = true;
-
-    // const querySnapshot = await getDocs(collection(db, "users"));
-    // querySnapshot.forEach((doc) => {
-    //   if ( doc.data().uid == user.uid ) {
-    //     isNewUser == false;
-    //     return;
-    //   } 
-    // });
-
-    // if (isNewUser) addUser({
-    //   displayName: userCred.user.displayName, 
-    //   phoneNumber: userCred.user.phoneNumber, 
-    //   photoURL: userCred.user.photoURL, 
-    // });
   }
 
   const addUser = async (user) => {
@@ -145,7 +129,7 @@ export default function SignIn({ navigation }) {
             <Text style={[styles.underline, styles.fontColor]}>Sign Up</Text>
           </Pressable>
 
-          <Pressable onPress={() => navigation.navigate('Sign Up')}>
+          <Pressable onPress={() => navigation.navigate('Forgot Password')}>
             <Text style={[styles.underline, styles.fontColor]}>Forgot Password</Text>
           </Pressable>
         </View>
