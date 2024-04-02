@@ -20,39 +20,43 @@ export default function SignIn({ navigation }) {
   const provider = new GoogleAuthProvider();
   
   // Ham nay chay lien tuc de kiem tra xem nguoi dung co dang nhap ko
-  auth.onAuthStateChanged(async user => {
+  // auth.onAuthStateChanged(async user => {
 
-    // Neu nguoi dung da dang nhap thi chuyen huong sang trang khac
-    // console.log(user);
-    if (user) {
-      navigation.navigate('Main', { user: user });
-    }
-  });
+  //   // Neu nguoi dung da dang nhap thi chuyen huong sang trang khac
+  //   // console.log(user);
+  //   if (user) {
+  //     navigation.navigate('Main', { user: user });
+  //   }
+  // });
 
   const signInGoogle = async () => {
     const userCred = await signInWithPopup(auth, provider);
     const user = userCred.user;
-    // console.log(userCred);
+    console.log(userCred);
     
     // Them nguoi dung
+    
+    if (userCred.user.phoneNumber == null)
+      navigation.navigate('Phone Input', { user: {
+        displayName: userCred.user.displayName, 
+        photoURL: userCred.user.photoURL, 
+      } });
 
-    let isNewUser = true;
-    navigation.navigate('PhoneInput', { user: user });
+    // let isNewUser = true;
 
-    const querySnapshot = await getDocs(collection(db, "users"));
-    querySnapshot.forEach((doc) => {
-      if ( doc.data().uid == user.uid ) {
-        isNewUser == false;
-        return;
-      } 
-    });
+    // const querySnapshot = await getDocs(collection(db, "users"));
+    // querySnapshot.forEach((doc) => {
+    //   if ( doc.data().uid == user.uid ) {
+    //     isNewUser == false;
+    //     return;
+    //   } 
+    // });
 
-    if (isNewUser) addUser({
-      displayName: userCred.user.displayName, 
-      phoneNumber: userCred.user.phoneNumber, 
-      photoURL: userCred.user.photoURL, 
-      password: "", 
-    });
+    // if (isNewUser) addUser({
+    //   displayName: userCred.user.displayName, 
+    //   phoneNumber: userCred.user.phoneNumber, 
+    //   photoURL: userCred.user.photoURL, 
+    // });
   }
 
   const addUser = async (user) => {

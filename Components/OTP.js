@@ -16,6 +16,7 @@ export default function OTP({ navigation }) {
 
   const route = useRoute()
   const user = route.params?.user;
+  console.log(user);
 
   const styles = GlobalStyle();
 

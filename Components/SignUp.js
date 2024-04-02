@@ -173,7 +173,7 @@ export default function SignUp({ navigation }) {
           /> 
         </View>
 
-        <Text style={[styles.error, styles.marginSide]}> {errors.error} </Text> 
+        <Text style={[styles.error, styles.marginSide]}>{errors.error}</Text> 
 
         <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]}
           onPress={checkPhoneNumber}
