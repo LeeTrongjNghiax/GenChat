@@ -1,5 +1,6 @@
-import { GoogleAuthProvider } from "firebase/auth";
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { GoogleAuthProvider } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore"; 
 import React, { useState } from 'react';
 
@@ -9,6 +10,7 @@ import GlobalAsset from '../GlobalAsset.js';
 import config from '../firebase/config.js';
 
 export default function SignIn({ navigation }) {
+  const [showPassword, setShowPassword] = useState(false);
   const [phoneNumber, onChangePhoneNumber] = useState('');
   const [password, onChangePassword] = useState('');
   const [errors, setErrors] = useState({});
@@ -61,13 +63,15 @@ export default function SignIn({ navigation }) {
           password: user.password
         }
         navigation.navigate('Main', { user: user2 });
-      } 
+      }
     });
 
     let errors = {};
     errors.error = 'Login information does not exists.';
     setErrors(errors);
   }
+  
+  const toggleShowPassword = () => setShowPassword(!showPassword); 
 
   const styles = GlobalStyle();
   
@@ -98,9 +102,16 @@ export default function SignIn({ navigation }) {
             style={[styles.input, styles.fontColor]}
             placeholder="Password"
             textContentType='password'
+            secureTextEntry={!showPassword}
             onChangeText={onChangePassword}
             value={password}
           />
+          <MaterialCommunityIcons 
+            name={showPassword ? 'eye-off' : 'eye'} 
+            size={24} 
+            color="#aaa"
+            onPress={toggleShowPassword} 
+          /> 
         </View>
 
         <View style={[styles.hyperlinkComponent, styles.marginSide]}>
