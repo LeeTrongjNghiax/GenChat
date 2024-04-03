@@ -25,6 +25,8 @@ export default function OTP({ navigation }) {
   const appVerifier = otps.appVerifier;
 
   const db = config.db;
+  // const bcrypt = require('bcrypt');
+  // const bcrypt = require('bcrypt');
 
   const signIn = () => {
     let errors = {};
@@ -74,6 +76,11 @@ export default function OTP({ navigation }) {
 
   const addUser = async (user) => {
     try {
+      // const hashedPassword = await bcrypt.hash(
+      //   user.password, 
+      //   "PhamVanHau"
+      // )
+
       let userAdded = {
         displayName: user.displayName, 
         phoneNumber: user.phoneNumber, 

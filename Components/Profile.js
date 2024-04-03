@@ -36,9 +36,9 @@ export default function Profile({ navigation }) {
       <View style={styles.container}>
         <Text style={[styles.title, styles.marginSide, styles.fontColor]}>Profile</Text>
 
-        <Pressable onPress={() => navigation.navigate('Main', { screen: 'EditProfile' }, {user})}>
+        {/* <Pressable onPress={() => navigation.navigate('Main', { screen: 'EditProfile' }, {user})}>
           <Text style={[styles.marginSide, styles.underline, styles.fontColor]}>Edit Profile</Text>
-        </Pressable>
+        </Pressable> */}
 
         <View style={[styles.marginSide, {
           flex: 1, 
