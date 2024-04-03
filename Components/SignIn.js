@@ -32,14 +32,86 @@ export default function SignIn({ navigation }) {
 
   const signInGoogle = async () => {
     const userCred = await signInWithPopup(auth, provider);
+
+    console.log(userCred.user);
     
-    // Them nguoi dung
-    
-    if (userCred.user.phoneNumber == null)
+    const querySnapshot = await getDocs(collection(db, "users"));
+
+    if (querySnapshot.size == 0)
       navigation.navigate('Phone Input', { user: {
         displayName: userCred.user.displayName, 
         photoURL: userCred.user.photoURL, 
+        email: userCred.user.email, 
       } });
+
+    for(let i = 0; i < querySnapshot.size; i++) {
+      const user = querySnapshot.docs[i]._document.data.value.mapValue.fields;
+
+      console.log("----------------------------------------");
+      console.log(user);
+      console.log("FireStore: " + user.email.stringValue);
+      console.log("Google: " + userCred.user.email);
+      console.log("Google: " + userCred.user.phoneNumber);
+
+      if ( user.email.stringValue === userCred.user.email ) {
+        
+        // Neu nguoi dung chua nhap so dien thoai thi vao trang nhap so dien thoai
+        // , neu khong thi vao trang Profile
+
+        console.log("1");
+        navigation.navigate('Main', { user: {
+          displayName: userCred.user.displayName, 
+          photoURL: userCred.user.photoURL, 
+          email: userCred.user.email, 
+        } });
+        break;
+      }
+      else {
+
+        console.log("2");
+        navigation.navigate('Phone Input', { user: {
+          displayName: userCred.user.displayName, 
+          photoURL: userCred.user.photoURL, 
+          email: userCred.user.email, 
+        } });
+        break;
+      }
+    }
+    
+    // querySnapshot.forEach(doc => {
+    //   const user = doc.data();
+
+    //   console.log("----------------------------------------");
+    //   console.log(user);
+    //   console.log("FireStore: " + user.email);
+    //   console.log("Google: " + userCred.user.email);
+    //   console.log("Google: " + userCred.user.phoneNumber);
+      
+    //   // Neu nguoi dung dang nhap bang google ma da co du lieu tren he thong
+
+    //   if ( user.email == userCred.user.email ) {
+        
+    //     // Neu nguoi dung chua nhap so dien thoai thi vao trang nhap so dien thoai
+    //     // , neu khong thi vao trang Profile
+
+    //     console.log("1");
+    //     navigation.navigate('Main', { user: {
+    //       displayName: userCred.user.displayName, 
+    //       photoURL: userCred.user.photoURL, 
+    //       email: userCred.user.email, 
+    //     } });
+    //   }
+    //   else {
+
+    //     console.log("2");
+    //     navigation.navigate('Phone Input', { user: {
+    //       displayName: userCred.user.displayName, 
+    //       photoURL: userCred.user.photoURL, 
+    //       email: userCred.user.email, 
+    //     } });
+
+    //   }
+    // });
   }
 
   const signIn = async () => {

@@ -71,7 +71,8 @@ export default function PhoneInput({ navigation }) {
         displayName: user.displayName, 
         phoneNumber: phoneNumber, 
         photoURL: user.photoURL , 
-        password: ""
+        password: "", 
+        email: user.email
       }
     });
   }

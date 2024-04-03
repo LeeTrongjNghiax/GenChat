@@ -7,38 +7,19 @@ import GlobalStyle from '../GlobalStyle.js';
 import GlobalAsset from '../GlobalAsset.js';
 import config from '../firebase/config.js'
 
-export default function Profile({ navigation }) {
+export default function EditProfle({ navigation }) {
   const route = useRoute();
   const user = route.params?.user;
 
   const auth = config.auth;
   const styles = GlobalStyle();
-    
-  const appSignOut = () => {
-    signOut(auth).then(() => {
-      navigation.navigate('Sign In', {user: null});
-    }).catch((error) => {
-      console.error("Error signing out: " + error);
-    });
-  }
 
   let image = GlobalAsset.defaultLogoImage
-
-  if (user.photoURL == undefined) {
-    image = GlobalAsset.defaultLogoImage
-  }
-  else {
-    image = user.photoURL
-  }
 
   return (
     <ScrollView contentContainerStyle={styles.flexGrow1}>
       <View style={styles.container}>
-        <Text style={[styles.title, styles.marginSide, styles.fontColor]}>Profile</Text>
-
-        <Pressable onPress={() => navigation.navigate('Main', { screen: 'EditProfile' }, {user})}>
-          <Text style={[styles.marginSide, styles.underline, styles.fontColor]}>Edit Profile</Text>
-        </Pressable>
+        {/* <Text style={[styles.title, styles.marginSide, styles.fontColor]}>Edit Profile</Text>
 
         <View style={[styles.marginSide, {
           flex: 1, 
@@ -70,11 +51,7 @@ export default function Profile({ navigation }) {
         }}>
           <Text style={[styles.flex1, styles.fontColor]}>Phone Number</Text>
           <Text style={[styles.flex1, styles.bolder, styles.fontColor]}>{user.phoneNumber}</Text>
-        </View>
-
-        <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={appSignOut}>
-          <Text style={styles.btnSubmit}>Sign Out</Text>
-        </Pressable>
+        </View> */}
       </View>
     </ScrollView>
   )

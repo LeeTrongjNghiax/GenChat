@@ -4,6 +4,7 @@ import { useWindowDimensions, View } from 'react-native';
 import * as React from 'react';
 
 import Profile from '../../Components/Profile';
+import EditProfile from '../../Components/EditProfile';
 
 export default function Main({ navigation }) {
   const route = useRoute();
@@ -11,8 +12,9 @@ export default function Main({ navigation }) {
 
   const renderScene = ({ route }) => {
     switch (route.key) {
-      case 'tab_2': return <View></View>;
       case 'tab_1': return <Profile user={user} navigation={navigation} />;
+      case 'tab_2': return <View></View>;
+      case 'tab_3': return <EditProfile user={user} navigation={navigation} />;
       default: return null;
     }
   };
@@ -23,6 +25,7 @@ export default function Main({ navigation }) {
   const [routes] = React.useState([
     { key: 'tab_1', title: 'Profile' },
     { key: 'tab_2', title: 'Message' },
+    { key: 'tab_3', title: 'Edit Profle' },
   ]);
 
   return (
@@ -35,24 +38,25 @@ export default function Main({ navigation }) {
       pagerStyle={{
         backgroundColor: 'white'
       }}
-      renderTabBar={props => <TabBar
-        {...props}
-        activeColor='black'
-        inactiveColor='#aaaaaa'
-        indicatorContainerStyle={{
-          backgroundColor: 'black',
-          height: 10
-        }}
-        indicatorStyle={{
-          backgroundColor: 'black'
-        }}
-        tabStyle={{
-          backgroundColor: 'white'
-        }}
-        labelStyle={{
-          fontWeight: 'bold'
-        }}
-      />}
+      renderTabBar={props => <View></View>}
+      // renderTabBar={props => <TabBar
+      //   {...props}
+      //   activeColor='black'
+      //   inactiveColor='#aaaaaa'
+      //   indicatorContainerStyle={{
+      //     backgroundColor: 'black',
+      //     height: 10
+      //   }}
+      //   indicatorStyle={{
+      //     backgroundColor: 'black'
+      //   }}
+      //   tabStyle={{
+      //     backgroundColor: 'white'
+      //   }}
+      //   labelStyle={{
+      //     fontWeight: 'bold'
+      //   }}
+      // />}
     />
   );
 }

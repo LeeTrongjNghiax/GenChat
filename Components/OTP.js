@@ -74,12 +74,19 @@ export default function OTP({ navigation }) {
 
   const addUser = async (user) => {
     try {
-      await setDoc(doc(db, "users", user.phoneNumber), {
+      let userAdded = {
         displayName: user.displayName, 
         phoneNumber: user.phoneNumber, 
         photoURL: user.photoURL == null ? "default" : user.photoURL, 
-        password: user.password
-      });
+        password: user.password, 
+      }
+
+      if (user.email == undefined)
+        userAdded.email = null;
+      else
+        userAdded.email = user.email;
+
+      await setDoc(doc(db, "users", user.phoneNumber), userAdded);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
