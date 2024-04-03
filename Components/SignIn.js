@@ -63,6 +63,7 @@ export default function SignIn({ navigation }) {
           displayName: userCred.user.displayName, 
           photoURL: userCred.user.photoURL, 
           email: userCred.user.email, 
+          phoneNumber: user.phoneNumber.stringValue, 
         } });
         break;
       }

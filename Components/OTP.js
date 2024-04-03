@@ -61,7 +61,7 @@ export default function OTP({ navigation }) {
       .confirm(OTP)
       .then(async (res) => {
         addUser(user);
-        alert("Sign In successfully!")
+        alert("Sign Up successfully!")
         navigation.navigate('Main', { user });
       })
       .catch((error) => {
