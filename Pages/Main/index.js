@@ -25,7 +25,7 @@ export default function Main({ navigation }) {
   const [routes] = React.useState([
     { key: 'tab_1', title: 'Profile' },
     { key: 'tab_2', title: 'Message' },
-    { key: 'tab_3', title: 'Edit Profle' },
+    // { key: 'tab_3', title: 'Edit Profle' },
   ]);
 
   return (
@@ -38,25 +38,25 @@ export default function Main({ navigation }) {
       pagerStyle={{
         backgroundColor: 'white'
       }}
-      renderTabBar={props => <View></View>}
-      // renderTabBar={props => <TabBar
-      //   {...props}
-      //   activeColor='black'
-      //   inactiveColor='#aaaaaa'
-      //   indicatorContainerStyle={{
-      //     backgroundColor: 'black',
-      //     height: 10
-      //   }}
-      //   indicatorStyle={{
-      //     backgroundColor: 'black'
-      //   }}
-      //   tabStyle={{
-      //     backgroundColor: 'white'
-      //   }}
-      //   labelStyle={{
-      //     fontWeight: 'bold'
-      //   }}
-      // />}
+      // renderTabBar={props => <View></View>}
+      renderTabBar={props => <TabBar
+        {...props}
+        activeColor='black'
+        inactiveColor='#aaaaaa'
+        indicatorContainerStyle={{
+          backgroundColor: 'black',
+          height: 10
+        }}
+        indicatorStyle={{
+          backgroundColor: 'black'
+        }}
+        tabStyle={{
+          backgroundColor: 'white'
+        }}
+        labelStyle={{
+          fontWeight: 'bold'
+        }}
+      />}
     />
   );
 }
