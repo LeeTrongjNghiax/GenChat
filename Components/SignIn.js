@@ -125,12 +125,11 @@ export default function SignIn({ navigation }) {
         user.phoneNumber == phoneNumber &&
         user.password == password
       ) {
-        const user2 = {
+        navigation.navigate('Main', { user: {
           displayName: user.displayName, 
           phoneNumber: user.phoneNumber, 
           password: user.password
-        }
-        navigation.navigate('Main', { user: user2 });
+        } });
       }
     });
 

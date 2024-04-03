@@ -25,8 +25,6 @@ export default function OTP({ navigation }) {
   const appVerifier = otps.appVerifier;
 
   const db = config.db;
-  // const bcrypt = require('bcrypt');
-  // const bcrypt = require('bcrypt');
 
   const signIn = () => {
     let errors = {};
