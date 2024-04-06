@@ -5,6 +5,7 @@ import * as React from 'react';
 
 import Profile from '../../Components/Profile';
 import EditProfile from '../../Components/EditProfile';
+import ChatContainer from '../../Components/ChatContainer';
 
 export default function Main({ navigation }) {
   const route = useRoute();
@@ -12,8 +13,8 @@ export default function Main({ navigation }) {
 
   const renderScene = ({ route }) => {
     switch (route.key) {
-      case 'tab_1': return <Profile user={user} navigation={navigation} />;
-      case 'tab_2': return <View></View>;
+      case 'tab_1': return <Profile user={user} lmao={1} navigation={navigation} />;
+      case 'tab_2': return <ChatContainer navigation={navigation} />;
       case 'tab_3': return <EditProfile user={user} navigation={navigation} />;
       default: return null;
     }
