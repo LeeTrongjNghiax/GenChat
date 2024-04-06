@@ -11,7 +11,10 @@ export default function ChatUser({ navigation }) {
         flexDirection: 'row', 
         alignItems: 'center',
         padding: 10, 
-        gap: 10
+        gap: 10, 
+        margin: 10, 
+        borderRadius: 5, 
+        backgroundColor: '#dddddd'
       }}
     >
       <Image

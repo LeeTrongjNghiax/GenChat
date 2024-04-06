@@ -37,7 +37,7 @@ export default function Main({ navigation }) {
       initialLayout={{ width: layout.width }}
       tabBarPosition='bottom'
       pagerStyle={{
-        backgroundColor: 'white'
+        backgroundColor: '#eeeeee'
       }}
       // renderTabBar={props => <View></View>}
       renderTabBar={props => <TabBar

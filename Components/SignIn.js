@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 
 import GlobalStyle from '../GlobalStyle.js';
 import GlobalAsset from '../GlobalAsset.js';
-import GlobalUtils from '../GlobalUtils.js';
 
 import config from '../firebase/config.js';
 

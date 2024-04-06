@@ -27,6 +27,10 @@ export default function GlobalStyle() {
             marginLeft: margin,
             marginRight: margin,
         }, 
+        paddingSide: {
+            paddingLeft: margin,
+            paddingRight: margin,
+        }, 
         bolder: {
             fontWeight: 'bolder'
         }, 
