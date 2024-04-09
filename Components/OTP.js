@@ -1,13 +1,12 @@
 import { View, Text, Image, Pressable, TextInput, ScrollView } from 'react-native';
 import { signInWithPhoneNumber } from "firebase/auth";
-import { setDoc, doc } from 'firebase/firestore'
 import { useRoute } from "@react-navigation/native";
 import React, { useState } from 'react';
+import registerUser from "../services/registerUser.js";
+import config from "../firebase/config.js";
 
 import GlobalStyle from '../GlobalStyle.js';
 import GlobalAsset from '../GlobalAsset.js';
-
-import config from '../firebase/config.js';
 
 export default function OTP({ navigation }) {
   const [OTP, setOTP] = useState('');
@@ -20,16 +19,23 @@ export default function OTP({ navigation }) {
   const styles = GlobalStyle();
 
   const otps = route.params?.otp;
-  const auth = otps.auth;
+  const auth = config;
   const formatPh = otps.formatPh;
   const appVerifier = otps.appVerifier;
 
-  const db = config.db;
+  const handleSignUp = async () => {
+    try {
+      await registerUser(user.name, user.phoneNumber, user.password, user.email);
+    } catch (error) {
+      console.error("Registration error:", error);
+    }
+  };
 
   const signIn = () => {
     let errors = {};
     let alerts = {};
 
+    console.log("111");
     signInWithPhoneNumber(auth, formatPh, appVerifier)
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
@@ -42,59 +48,25 @@ export default function OTP({ navigation }) {
         setErrors(errors);
         console.error("Error sending OTP: " + error);
       });
-  }
+    console.log("222");
 
-  const verifyInput = () => {
-    let errors = {};
-
-    if (!OTP)
-      errors.error = 'OTP is required.';
-
-    if (errors.error)
-      setErrors(errors);
-    else
-      onOTPVerify();
   }
 
   function onOTPVerify() {
     window.confirmationResult
       .confirm(OTP)
       .then(async (res) => {
-        addUser(user);
-        alert("Sign Up successfully!")
-        navigation.navigate('Main', { user });
+        // addUser(user);
+        console.log("---------------------------");
+        handleSignUp();
+        console.log("===========================");
+        navigation.navigate("Login");
       })
       .catch((error) => {
-        let errors = {};
-        errors.error = "OTP is invalid";
+        errors.error = "Error verifying OTP: " + error;
         setErrors(errors);
         console.error("Error verifying OTP: " + error);
       });
-  }
-
-  const addUser = async (user) => {
-    try {
-      // const hashedPassword = await bcrypt.hash(
-      //   user.password, 
-      //   "PhamVanHau"
-      // )
-
-      let userAdded = {
-        displayName: user.displayName, 
-        phoneNumber: user.phoneNumber, 
-        photoURL: user.photoURL == null ? "default" : user.photoURL, 
-        password: user.password, 
-      }
-
-      if (user.email == undefined)
-        userAdded.email = null;
-      else
-        userAdded.email = user.email;
-
-      await setDoc(doc(db, "users", user.phoneNumber), userAdded);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
   }
 
   return (
@@ -124,7 +96,7 @@ export default function OTP({ navigation }) {
         </View>
 
         <Pressable style={[styles.btnSubmitWrapper, styles.marginSide]} onPress={
-          () => {verifyInput();}
+          () => {onOTPVerify();}
         }>
           <Text style={styles.btnSubmit}>Submit Code</Text>
         </Pressable>

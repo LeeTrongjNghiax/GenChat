@@ -1,10 +1,28 @@
 import React from 'react'
+import { useRoute } from "@react-navigation/native";
 import { TextInput, ScrollView, Text, View, Image, Pressable } from 'react-native'
 import GlobalAsset from "../GlobalAsset.js";
 import GlobalStyle from '../GlobalStyle.js';
+import acceptFriend from '../services/acceptFriend.js';
+import removeRequestSend from '../services/removeRequestSend.js';
+import removeRequestGet from '../services/removeRequestGet.js';
+import createRoom from '../services/createRoom.js';
 
-export default function SentFriendRequestUser({ navigation }) {
-  const styles = GlobalStyle();
+export default function ReceivedFriendRequestUser({ navigation, user, userRoot }) {  
+  const acceptFriendRequest = async () => {
+    await acceptFriend(userRoot.phoneNumber, user.phoneNumber);
+    await acceptFriend(user.phoneNumber, userRoot.phoneNumber);
+    await createRoom([userRoot.phoneNumber, user.phoneNumber], "1_1");
+    alert("Added friend Successfully!");
+    navigation.navigate("ChatHistory");
+  }
+
+  const declineFriendRequest = async () => {
+    await removeRequestSend(userRoot.phoneNumber, user.phoneNumber);
+    await removeRequestGet(user.phoneNumber, userRoot.phoneNumber);
+    alert("Remove friend request Successfully!");
+    navigation.navigate("ChatHistory");
+  }
 
   return (
     <View
@@ -47,8 +65,8 @@ export default function SentFriendRequestUser({ navigation }) {
             gap: 10
           }}
         >
-          <Text style={{fontWeight: 'bold'}}>Nguyen Thanh Khoa</Text>
-          <Text>0374858237</Text>
+          <Text style={{fontWeight: 'bold'}}>{user.name}</Text>
+          <Text>{user.phoneNumber}</Text>
         </View>
 
       </View>
@@ -62,7 +80,9 @@ export default function SentFriendRequestUser({ navigation }) {
       }}>
         {/* <Text style={{}}>Accept Friend?</Text> */}
         
-        <Pressable>
+        <Pressable
+          onPress={acceptFriendRequest}
+        >
           <Image
             source={GlobalAsset.acceptIcon}
             style={{
@@ -72,7 +92,9 @@ export default function SentFriendRequestUser({ navigation }) {
           >
           </Image>
         </Pressable>
-        <Pressable>
+        <Pressable
+          onPress={declineFriendRequest}
+        >
           <Image
             source={GlobalAsset.cancelIcon}
             style={{
