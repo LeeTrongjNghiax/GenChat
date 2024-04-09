@@ -1,9 +1,13 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Image } from 'react-native'
 
 export default function Chat(props) {
   const isSender = props.isSender; 
-    
+  const text = props.data.text;
+  
+  // console.log("Data");
+  // console.log(props.data);
+
   return (
     <View
       style={{
@@ -14,7 +18,7 @@ export default function Chat(props) {
         borderRadius: 10
       }}
     >
-      <Text>Hello</Text>
+      <Text>{text}</Text>
     </View>
   )
 }

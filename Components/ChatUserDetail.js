@@ -1,17 +1,115 @@
-import React from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { TextInput, ScrollView, View, Image, Text, Pressable } from 'react-native'
-import Chat from './Chat'
 import GlobalAsset from '../GlobalAsset'
+// import socketIOClient from "socket.io-client";
+import { useRoute } from "@react-navigation/native";
+
+import socket from '../utils/socket'
 
 export default function ChatUserDetail({ navigation }) {
+  // ----------------------
+
+  // const socketRef = useRef();
+
+  // useEffect(() => {
+  //   socketRef.current = socketIOClient.connect("http://localhost:6969")
+
+  //   socket.on("1", (mess) => {
+  //     console.log("------------------foundRoom--------------------");
+  //     console.log(mess);
+  //     // setChatMessages(previousMess.current);
+  //   })
+
+  //   return () => {
+  //     socketRef.current.disconnect();
+  //   };
+  // }, []);
+
+  // ----------------------
+
+  let message = "";
+  // const [message, onChangeMessage] = useEffect("");
+  // const previousMess = useRef("");
+  // const [chatMessages, setChatMessages] = useState([]);
+  const route = useRoute();
+
+  const roomId = route.params?.roomId
+  const userGet = route.params?.userGet
+  const userSend = route.params?.userSend
+  console.log("User");
+  console.log(userGet);
+  console.log(userSend);
+
+  useEffect(() => {
+    // 5. Tim lai phong vua them vao
+    
+    // socket.on("roomsList", (chatRooms) => {
+    //   console.log("------------------roomsList--------------------");
+    //   console.log(chatRooms);
+    // })
+    
+    // socket.emit("findRoom", roomId);
+
+    // socket.on("foundRoom", (roomChats) => {
+    //   console.log("------------------foundRoom--------------------");
+    //   console.log(roomChats);
+    //   setChatMessages(roomChats);
+    // });
+    
+    // socket.on(roomId, (mess) => {
+    //   console.log("------------------foundRoom--------------------");
+    //   console.log(mess);
+    //   setChatMessages(mess);
+    // })
+    // socket.on(userGet._id, (mess) => {
+    //   console.log("------------------foundRoom--------------------");
+    //   console.log(mess);
+    //   setChatMessages(mess);
+    // })
+    // previousMess.current = message;
+
+   
+  }, []);
+  
+  const handleNewMessage = () => {
+    const hour =
+      new Date().getHours() < 10
+        ? `0${new Date().getHours()}`
+        : `${new Date().getHours()}`;
+
+    const mins =
+      new Date().getMinutes() < 10
+        ? `0${new Date().getMinutes()}`
+        : `${new Date().getMinutes()}`;
+
+    console.log("Message data:");
+    console.log({
+      userGet: userGet._id,
+      userSend: userSend._id,
+      message,
+      room_id: roomId,
+      timestamp: { hour, mins },
+      
+    });
+
+    // Emit message lai len socket
+    socket.emit("newMessage", {
+      userGet: userGet._id,
+      userSend: userSend._id,
+      message,
+      room_id: roomId,
+      timestamp: { hour, mins },
+    });
+  };
+ 
   return (
+   
     <View>
       <View
         style={{
           flex: 1, 
           flexDirection: 'row', 
           alignItems: 'center', 
-          backgroundColor: '#eeeeee', 
           gap: 10, 
           padding: 10, 
         }}
@@ -28,27 +126,18 @@ export default function ChatUserDetail({ navigation }) {
         >
         </Image>
 
-        <Text style={{fontWeight: 'bold'}}>Nguyen Thanh Khoa</Text>
+        <Text>Nguyen Thanh Khoa</Text>
       </View>
 
-      <View style={{height: 360}}>
+      <View style={{height: 370}}>
         <ScrollView contentContainerStyle={{  }}>
-          <Chat navigation={navigation} isSender={true} />
-          <Chat navigation={navigation} isSender={false} />
-          <Chat navigation={navigation} isSender={true} />
-          <Chat navigation={navigation} isSender={false} />
-          <Chat navigation={navigation} isSender={true} />
-          <Chat navigation={navigation} isSender={false} />
-          <Chat navigation={navigation} isSender={true} />
-          <Chat navigation={navigation} isSender={false} />
-          <Chat navigation={navigation} isSender={true} />
-          <Chat navigation={navigation} isSender={false} />
-          <Chat navigation={navigation} isSender={true} />
-          <Chat navigation={navigation} isSender={false} />
-          <Chat navigation={navigation} isSender={true} />
-          <Chat navigation={navigation} isSender={false} />
-          <Chat navigation={navigation} isSender={true} />
-          <Chat navigation={navigation} isSender={false} />
+          {/* {
+            chatMessages.map(elem => <Chat
+              data={elem}
+              key={elem.id}
+            />
+            )
+          } */}
         </ScrollView>
       </View>
 
@@ -58,10 +147,11 @@ export default function ChatUserDetail({ navigation }) {
       }}>
         <TextInput
           style={{
-            backgroundColor: "#ffffff", 
             padding: 10, 
-            flexGrow: 1
+            backgroundColor: "#ffffff", 
+            flexGrow: 3
           }}
+          // onChangeText={onChangeMessage}
           placeholder='Message...'
         >
         </TextInput>
@@ -82,6 +172,17 @@ export default function ChatUserDetail({ navigation }) {
             }}
           >
           </Image>
+        </Pressable>
+        <Pressable
+          style={{
+            justifyContent: 'center',
+            flexGrow: 0, 
+            flexDirection: 'row', 
+            gap: 20, 
+            padding: 10, 
+          }}
+          onPress={handleNewMessage}
+        >
           <Image
             source={GlobalAsset.sendIcon}
             style={{
