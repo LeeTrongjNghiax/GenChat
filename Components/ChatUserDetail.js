@@ -1,36 +1,35 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { TextInput, ScrollView, View, Image, Text, Pressable } from 'react-native'
 import GlobalAsset from '../GlobalAsset'
-// import socketIOClient from "socket.io-client";
+import socketIOClient from "socket.io-client";
 import { useRoute } from "@react-navigation/native";
+import Chat from "./Chat.js";
 
 import socket from '../utils/socket'
 
 export default function ChatUserDetail({ navigation }) {
   // ----------------------
 
-  // const socketRef = useRef();
+  const socketRef = useRef();
 
-  // useEffect(() => {
-  //   socketRef.current = socketIOClient.connect("http://localhost:6969")
+  useEffect(() => {
+    socketRef.current = socket;
 
-  //   socket.on("1", (mess) => {
-  //     console.log("------------------foundRoom--------------------");
-  //     console.log(mess);
-  //     // setChatMessages(previousMess.current);
-  //   })
+    socketRef.current.on("1", (mess) => {
+      console.log("------------------foundRoom-2--------------------");
+      console.log(mess);
+      setChatMessages(mess);
+    })
 
-  //   return () => {
-  //     socketRef.current.disconnect();
-  //   };
-  // }, []);
+    return () => {
+      socketRef.current.disconnect();
+    };
+  }, []);
 
   // ----------------------
 
-  let message = "";
-  // const [message, onChangeMessage] = useEffect("");
-  // const previousMess = useRef("");
-  // const [chatMessages, setChatMessages] = useState([]);
+  const [message, onChangeMessage] = useState("");
+  const [chatMessages, setChatMessages] = useState([]);
   const route = useRoute();
 
   const roomId = route.params?.roomId
@@ -131,13 +130,13 @@ export default function ChatUserDetail({ navigation }) {
 
       <View style={{height: 370}}>
         <ScrollView contentContainerStyle={{  }}>
-          {/* {
+          {
             chatMessages.map(elem => <Chat
               data={elem}
               key={elem.id}
             />
             )
-          } */}
+          }
         </ScrollView>
       </View>
 
@@ -151,7 +150,7 @@ export default function ChatUserDetail({ navigation }) {
             backgroundColor: "#ffffff", 
             flexGrow: 3
           }}
-          // onChangeText={onChangeMessage}
+          onChangeText={onChangeMessage}
           placeholder='Message...'
         >
         </TextInput>
