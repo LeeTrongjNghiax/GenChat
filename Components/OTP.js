@@ -23,6 +23,8 @@ export default function OTP({ navigation }) {
   const formatPh = otps.formatPh;
   const appVerifier = otps.appVerifier;
 
+  console.log(signInWithPhoneNumber)
+
   const handleSignUp = async () => {
     try {
       await registerUser(user.name, user.phoneNumber, user.password, user.email);
@@ -41,7 +43,6 @@ export default function OTP({ navigation }) {
         window.confirmationResult = confirmationResult;
         alerts.alert = "OTP sended successfully!";
         setAlerts(alerts);
-        // console.log("OTP sended successfully!");
       })
       .catch((error) => {
         errors.error = "Error sending OTP: " + error;
@@ -49,17 +50,13 @@ export default function OTP({ navigation }) {
         console.error("Error sending OTP: " + error);
       });
     console.log("222");
-
   }
 
   function onOTPVerify() {
     window.confirmationResult
       .confirm(OTP)
       .then(async (res) => {
-        // addUser(user);
-        console.log("---------------------------");
         handleSignUp();
-        console.log("===========================");
         navigation.navigate("Login");
       })
       .catch((error) => {

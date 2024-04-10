@@ -1,9 +1,9 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { TextInput, ScrollView, View, Image, Text, Pressable } from 'react-native'
 import GlobalAsset from '../GlobalAsset'
-import socketIOClient from "socket.io-client";
 import { useRoute } from "@react-navigation/native";
 import Chat from "./Chat.js";
+import socketIOClient from "socket.io-client";
 
 import socket from '../utils/socket'
 
@@ -14,8 +14,14 @@ export default function ChatUserDetail({ navigation }) {
 
   useEffect(() => {
     socketRef.current = socket;
+    // socketRef.current = socketIOClient.connect("http://localhost:6969");
 
-    socketRef.current.on("1", (mess) => {
+    socketRef.current.on(userGet._id, (mess) => {
+      console.log("------------------foundRoom-2--------------------");
+      console.log(mess);
+      setChatMessages(mess);
+    });
+    socketRef.current.on(userSend._id, (mess) => {
       console.log("------------------foundRoom-2--------------------");
       console.log(mess);
       setChatMessages(mess);
@@ -65,9 +71,6 @@ export default function ChatUserDetail({ navigation }) {
     //   console.log(mess);
     //   setChatMessages(mess);
     // })
-    // previousMess.current = message;
-
-   
   }, []);
   
   const handleNewMessage = () => {

@@ -14,7 +14,7 @@ import GlobalStyle from "../GlobalStyle.js";
 import GlobalAsset from "../GlobalAsset.js";
 
 import config from "../firebase/config.js";
-//
+
 export default function SignUp({ navigation }) {
   const [name, onChangeName] = useState("");
   const [phoneNumber, onChangePhoneNumber] = useState("");
@@ -28,34 +28,31 @@ export default function SignUp({ navigation }) {
 
   const auth = config.auth;
 
-  console.log(config);
   const styles = GlobalStyle();
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
-  const toggleShowRepeatedPassword = () =>
-    setShowRepeatedPassword(!showRepeatedPassword);
+  const toggleShowRepeatedPassword = () => setShowRepeatedPassword(!showRepeatedPassword);
 
-
-    function onCaptchVerify() {
-      console.log("111");
-      if (!window.recaptchaVerifier) {
+  function onCaptchVerify() {
+    console.log("111");
+    if (!window.recaptchaVerifier) {
       console.log("222");
       window.recaptchaVerifier = new RecaptchaVerifier(
-        config,
-          "recaptcha-container",
-          {
-            size: "invisible",
-            callback: (response) => {
-              signUp();
-            },
-            "expired-callback": () => {
-              
-            },
-          }
-        );
-      }
+        auth,
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: (response) => {
+            signUp();
+          },
+          "expired-callback": () => {
+            
+          },
+        }
+      );
     }
+  }
   
     function signUp() {
       setLoading(true);
@@ -94,28 +91,6 @@ export default function SignUp({ navigation }) {
       else
         signUp();
     }
-  
-    // const checkPhoneNumber = async () => {
-    //   const querySnapshot = await getDocs(collection(db, "users"));
-    //   let isExistPhoneNumber = false;
-  
-    //   querySnapshot.forEach(doc => {
-    //     const docPhoneNumber = doc.data().phoneNumber;
-        
-    //     if (isExistPhoneNumber == false) {
-    //       if ( docPhoneNumber == phoneNumber ) {
-    //         isExistPhoneNumber = true;
-    //         let errors = {};
-    //         errors.error = 'Phone number already exists';
-    //         setErrors(errors);
-    //       }
-    //     } 
-    //   });
-  
-    //   if (isExistPhoneNumber == false)
-    //     verifyInput();
-    // }
-
   
   return (
     <ScrollView contentContainerStyle={styles.flexGrow1}>
